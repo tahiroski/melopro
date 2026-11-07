@@ -71,7 +71,7 @@
             color: var(--text-primary);
             min-height: 100vh;
             padding: 20px;
-            padding-bottom: 90px;
+            padding-bottom: 96px;
             transition: background-color 0.2s, color 0.2s;
             line-height: 1.5;
             user-select: none;
@@ -137,20 +137,20 @@
             justify-content: space-between;
             align-items: center;
             gap: 16px;
-            margin-bottom: 24px;
-            padding-bottom: 18px;
+            margin-bottom: 18px;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--border);
         }
 
         .brand-section {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         .brand-logo {
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
             background: linear-gradient(135deg, var(--accent), var(--purple));
             display: flex;
@@ -161,8 +161,8 @@
         }
 
         .brand-logo svg {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             fill: none;
             stroke: #fff;
             stroke-width: 2.2;
@@ -171,7 +171,7 @@
         }
 
         .brand-text h1 {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 800;
             letter-spacing: -0.03em;
             display: flex;
@@ -180,7 +180,7 @@
         }
 
         .brand-text p {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
         }
 
@@ -194,14 +194,14 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            padding: 7px 12px;
-            border-radius: 10px;
-            font-size: 13px;
+            padding: 6px 11px;
+            border-radius: 9px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.15s ease;
         }
 
@@ -282,7 +282,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 4px;
+            padding: 3px;
             gap: 4px;
         }
 
@@ -290,11 +290,11 @@
             background: transparent;
             border: none;
             color: var(--text-primary);
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -307,8 +307,8 @@
 
         .current-month-label {
             font-weight: 700;
-            font-size: 14px;
-            min-width: 130px;
+            font-size: 13px;
+            min-width: 120px;
             text-align: center;
         }
 
@@ -365,6 +365,68 @@
             background: var(--accent-hover);
         }
 
+        /* MOBİL ODAKLANMA SEKMELERİ (FOCUS TABS) */
+        .focus-tabs {
+            display: none;
+            gap: 6px;
+            margin-bottom: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .focus-tabs::-webkit-scrollbar { display: none; }
+
+        .focus-tab-btn {
+            flex: 1;
+            min-width: 76px;
+            padding: 8px 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            text-align: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .focus-tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+        }
+        .focus-tab-btn.active.tab-income {
+            background: var(--success);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+        }
+        .focus-tab-btn.active.tab-expense {
+            background: var(--danger);
+            box-shadow: 0 2px 8px rgba(244, 63, 94, 0.35);
+        }
+        .focus-tab-btn.active.tab-pending {
+            background: var(--warning);
+            color: #0b0f19;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+        }
+
+        /* ODAK DÖNÜŞ ÇUBUĞU */
+        .focus-back-bar {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding: 8px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            animation: fadeIn 0.2s ease;
+        }
+
         /* 4 KPI CARDS GRID */
         .kpi-grid {
             display: grid;
@@ -389,6 +451,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            transition: all 0.2s ease;
         }
 
         .kpi-card {
@@ -404,7 +467,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 128px;
+            min-height: 124px;
         }
 
         .kpi-card:hover {
@@ -516,7 +579,7 @@
 
         .inline-drawer-body {
             padding: 12px 14px;
-            max-height: 340px;
+            max-height: 380px;
             overflow-y: auto;
         }
 
@@ -898,13 +961,15 @@
             font-size: 11px;
             font-weight: 600;
             cursor: pointer;
-            padding: 4px 10px;
+            padding: 4px 8px;
             border-radius: 8px;
-            min-width: 56px;
+            min-width: 54px;
+            transition: color 0.15s;
         }
 
         .nav-item.active {
             color: var(--accent);
+            font-weight: 700;
         }
 
         .nav-item svg {
@@ -924,13 +989,19 @@
             justify-content: center;
             margin-top: -16px;
             box-shadow: 0 4px 14px rgba(59, 130, 246, 0.45);
+            border: none;
+            cursor: pointer;
         }
 
+        /* MOBİL ODAKLANMA MANTIĞI */
         @media (max-width: 768px) {
             body {
-                padding: 16px 14px 100px;
+                padding: 16px 14px 105px;
             }
             .mobile-bottom-bar {
+                display: flex;
+            }
+            .focus-tabs {
                 display: flex;
             }
             .header {
@@ -946,12 +1017,54 @@
                 overflow-x: auto;
                 padding-bottom: 4px;
             }
+
+            /* ODAKLANMA MODLARI */
+            .mobile-focus-income #panel-expense,
+            .mobile-focus-income #panel-pending,
+            .mobile-focus-income #panel-net,
+            .mobile-focus-income #upcomingSection {
+                display: none !important;
+            }
+
+            .mobile-focus-expense #panel-income,
+            .mobile-focus-expense #panel-pending,
+            .mobile-focus-expense #panel-net,
+            .mobile-focus-expense #upcomingSection {
+                display: none !important;
+            }
+
+            .mobile-focus-pending #panel-income,
+            .mobile-focus-pending #panel-expense,
+            .mobile-focus-pending #panel-net {
+                display: none !important;
+            }
+
+            .mobile-focus-net #panel-income,
+            .mobile-focus-net #panel-expense,
+            .mobile-focus-net #panel-pending,
+            .mobile-focus-net #upcomingSection {
+                display: none !important;
+            }
+
+            .mobile-focus-income #drawer-income,
+            .mobile-focus-expense #drawer-expense,
+            .mobile-focus-pending #drawer-pending,
+            .mobile-focus-net #drawer-net {
+                display: block !important;
+            }
+
+            .mobile-focus-income #arrow-income,
+            .mobile-focus-expense #arrow-expense,
+            .mobile-focus-pending #arrow-pending,
+            .mobile-focus-net #arrow-net {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="mainContainer">
     <!-- HEADER -->
     <header class="header">
         <div class="brand-section">
@@ -1000,11 +1113,27 @@
         </div>
     </header>
 
+    <!-- MOBİL İÇİN HIZLI ODAKLANMA SEKMELERİ (FOCUS TABS) -->
+    <div class="focus-tabs" id="mobileFocusTabs">
+        <button class="focus-tab-btn active" id="tab-all" onclick="setFocusMode('all')">📊 Tüm Özet</button>
+        <button class="focus-tab-btn tab-income" id="tab-income" onclick="setFocusMode('income')">📥 Gelir</button>
+        <button class="focus-tab-btn tab-expense" id="tab-expense" onclick="setFocusMode('expense')">📤 Gider</button>
+        <button class="focus-tab-btn tab-pending" id="tab-pending" onclick="setFocusMode('pending')">⏳ Borçlar</button>
+    </div>
+
+    <!-- ODAKLANILDIĞINDA GÖRÜNEN GERİ DÖNÜŞ BARI -->
+    <div class="focus-back-bar" id="focusBackBar">
+        <button class="btn" onclick="setFocusMode('all')" style="padding:5px 10px; font-size:12px;">
+            <span>◀</span> Tüm Özete Dön
+        </button>
+        <span id="focusSectionTitle" style="font-weight:700; font-size:13px; color:var(--text-secondary);"></span>
+    </div>
+
     <!-- 4 KPI SUMMARY CARDS -->
     <section class="kpi-grid">
         <!-- 1. GELİR KARTI -->
-        <div class="panel-container">
-            <div class="kpi-card kpi-income" id="card-income" onclick="toggleCardDrawer('income')">
+        <div class="panel-container" id="panel-income">
+            <div class="kpi-card kpi-income" id="card-income" onclick="handleCardClick('income')">
                 <div>
                     <div class="kpi-top">
                         <span class="kpi-label">📥 Toplam Gelir</span>
@@ -1027,8 +1156,8 @@
         </div>
 
         <!-- 2. GİDER KARTI -->
-        <div class="panel-container">
-            <div class="kpi-card kpi-expense" id="card-expense" onclick="toggleCardDrawer('expense')">
+        <div class="panel-container" id="panel-expense">
+            <div class="kpi-card kpi-expense" id="card-expense" onclick="handleCardClick('expense')">
                 <div>
                     <div class="kpi-top">
                         <span class="kpi-label">📤 Toplam Gider</span>
@@ -1051,8 +1180,8 @@
         </div>
 
         <!-- 3. KALAN BORÇ KARTI -->
-        <div class="panel-container">
-            <div class="kpi-card kpi-pending" id="card-pending" onclick="toggleCardDrawer('pending')">
+        <div class="panel-container" id="panel-pending">
+            <div class="kpi-card kpi-pending" id="card-pending" onclick="handleCardClick('pending')">
                 <div>
                     <div class="kpi-top">
                         <span class="kpi-label">⏳ Kalan Borç</span>
@@ -1075,8 +1204,8 @@
         </div>
 
         <!-- 4. CEBE KALAN NET KARTI -->
-        <div class="panel-container">
-            <div class="kpi-card kpi-net" id="card-net" onclick="toggleCardDrawer('net')">
+        <div class="panel-container" id="panel-net">
+            <div class="kpi-card kpi-net" id="card-net" onclick="handleCardClick('net')">
                 <div>
                     <div class="kpi-top">
                         <span class="kpi-label">🏦 Cebe Kalan Net</span>
@@ -1113,24 +1242,24 @@
 
 <!-- MOBILE BOTTOM NAVIGATION BAR -->
 <div class="mobile-bottom-bar">
-    <button class="nav-item active" onclick="scrollToTop()">
+    <button class="nav-item active" id="nav-all" onclick="setFocusMode('all')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
         <span>Özet</span>
     </button>
-    <button class="nav-item" onclick="scrollToRadar()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-        <span>Borçlar</span>
+    <button class="nav-item" id="nav-income" onclick="setFocusMode('income')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+        <span>Gelir</span>
     </button>
     <button class="nav-item-add" onclick="openAddModal('expense')" title="Hızlı Ekle">
         <span style="font-size:24px; font-weight:800; line-height:1;">+</span>
     </button>
-    <button class="nav-item" onclick="openBackupModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-        <span>Yedek</span>
+    <button class="nav-item" id="nav-expense" onclick="setFocusMode('expense')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+        <span>Gider</span>
     </button>
-    <button class="nav-item" onclick="toggleProfileDropdown()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        <span>Profil</span>
+    <button class="nav-item" id="nav-pending" onclick="setFocusMode('pending')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <span>Borçlar</span>
     </button>
 </div>
 
@@ -1291,6 +1420,7 @@
     let currentMonth = new Date().getMonth();
     let entryType = 'expense';
     let isInstallment = false;
+    let currentFocusTab = 'all'; // 'all', 'income', 'expense', 'pending', 'net'
 
     let openDrawers = {
         income: false,
@@ -1301,7 +1431,6 @@
 
     // VERİ TABANI YÖNETİMİ & MİGRASYON
     function getInitialStore() {
-        // Eski versiyondan (v4) otomatik migrasyon
         const legacyData = localStorage.getItem('melopro_ekonomi_db_v4');
         let initialItems = [];
 
@@ -1400,6 +1529,64 @@
         currentYear = new Date().getFullYear();
         currentMonth = new Date().getMonth();
         render();
+    }
+
+    // MOBİL ODAKLANMA MODU (FOCUS MODE)
+    function handleCardClick(type) {
+        if (window.innerWidth <= 768) {
+            // Mobilde doğrudan o kısma odaklan
+            if (currentFocusTab === type) {
+                setFocusMode('all');
+            } else {
+                setFocusMode(type);
+            }
+        } else {
+            // Masaüstünde normal çekmece aç/kapa
+            toggleCardDrawer(type);
+        }
+    }
+
+    function setFocusMode(tab) {
+        currentFocusTab = tab;
+        const container = document.getElementById('mainContainer');
+        
+        container.classList.remove('mobile-focus-income', 'mobile-focus-expense', 'mobile-focus-pending', 'mobile-focus-net');
+        
+        document.querySelectorAll('.focus-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+
+        const tabBtn = document.getElementById(`tab-${tab}`);
+        if (tabBtn) tabBtn.classList.add('active');
+
+        const navBtn = document.getElementById(`nav-${tab}`);
+        if (navBtn) navBtn.classList.add('active');
+
+        const backBar = document.getElementById('focusBackBar');
+        const titleEl = document.getElementById('focusSectionTitle');
+
+        if (tab !== 'all') {
+            container.classList.add(`mobile-focus-${tab}`);
+            openDrawers[tab] = true;
+            if (backBar) {
+                backBar.style.display = 'flex';
+                const titles = {
+                    income: '📥 Gelirler Detayı',
+                    expense: '📤 Giderler Detayı',
+                    pending: '⏳ Kalan Borçlar & Radar',
+                    net: '🏦 Net Bakiye Özeti'
+                };
+                titleEl.textContent = titles[tab] || '';
+            }
+        } else {
+            if (backBar) backBar.style.display = 'none';
+            const navAll = document.getElementById('nav-all');
+            if (navAll) navAll.classList.add('active');
+        }
+
+        render();
+        if (window.innerWidth <= 768) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }
 
     // PROFİL VE İZOLASYON İŞLEMLERİ
@@ -1602,7 +1789,11 @@
 
     function closeCardDrawer(type) {
         openDrawers[type] = false;
-        render();
+        if (window.innerWidth <= 768 && currentFocusTab === type) {
+            setFocusMode('all');
+        } else {
+            render();
+        }
     }
 
     function renderAllDrawers(monthItems, income, expense, pending, net) {
@@ -1843,7 +2034,6 @@
                 const parsed = JSON.parse(e.target.result);
                 if (parsed && (parsed.profiles || parsed.items)) {
                     if (parsed.items && !parsed.profiles) {
-                        // Eski format yükleniyorsa aktif profile aktar
                         const pid = store.activeProfileId || 'profile_default';
                         store.data[pid].items = parsed.items;
                     } else {
@@ -1887,16 +2077,6 @@
         } catch (e) {
             alert("Geçersiz yedek kodu!");
         }
-    }
-
-    // NAVİGASYON SCROLL
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function scrollToRadar() {
-        const el = document.getElementById('upcomingSection');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
 
     // DIŞ TIKLAMA İLE DROPDOWN KAPATMA
