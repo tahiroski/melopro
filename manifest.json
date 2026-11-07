@@ -1,0 +1,20 @@
+{
+  "name": "MeloPro — Ev Ekonomisi & Borç Takip",
+  "short_name": "MeloPro",
+  "description": "Kişisel ve Aile Bütçesi, Sabit Giderler ve Taksitli Ödeme Takip Sistemi",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0f19",
+  "theme_color": "#0b0f19",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
