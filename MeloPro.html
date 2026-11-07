@@ -2098,6 +2098,13 @@
         }
     });
 
+    // KALICI HAFIZA GÜVENCESİ (Storage Persistence - Tarayıcı veya telefon kapansa da silinmez)
+    if (navigator.storage && navigator.storage.persist) {
+        navigator.storage.persist().then(persistent => {
+            console.log("MeloPro: Kalıcı depolama aktif ->", persistent);
+        });
+    }
+
     // PWA SERVICE WORKER KAYDI
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
