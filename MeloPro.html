@@ -381,7 +381,7 @@
 
         .focus-tab-btn {
             flex: 1;
-            min-width: 76px;
+            min-width: 72px;
             padding: 8px 10px;
             border: none;
             background: transparent;
@@ -407,6 +407,10 @@
         .focus-tab-btn.active.tab-expense {
             background: var(--danger);
             box-shadow: 0 2px 8px rgba(244, 63, 94, 0.35);
+        }
+        .focus-tab-btn.active.tab-bills {
+            background: var(--purple);
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.35);
         }
         .focus-tab-btn.active.tab-pending {
             background: var(--warning);
@@ -701,6 +705,123 @@
             font-size: 13px;
         }
 
+        /* 🧾 FATURALAR BÖLÜMÜ STİLLERİ */
+        .bills-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-top: 24px;
+        }
+
+        .bills-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .bills-title {
+            font-size: 16px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .bill-card {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .bill-card.entered {
+            border-color: rgba(16, 185, 129, 0.4);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .bill-card.waiting {
+            border: 1px dashed var(--warning);
+            background: rgba(245, 158, 11, 0.04);
+        }
+
+        .bill-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .bill-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bill-icon {
+            font-size: 22px;
+            background: var(--bg-card);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .bill-text-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .bill-text-due {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .bill-action-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+            gap: 8px;
+        }
+
+        .bill-input-field {
+            width: 105px;
+            padding: 7px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .bill-input-field:focus {
+            border-color: var(--accent);
+        }
+
         /* UPCOMING RADAR SECTION */
         .upcoming-section {
             background: var(--bg-card);
@@ -961,9 +1082,9 @@
             font-size: 11px;
             font-weight: 600;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 4px 6px;
             border-radius: 8px;
-            min-width: 54px;
+            min-width: 48px;
             transition: color 0.15s;
         }
 
@@ -1022,6 +1143,7 @@
             .mobile-focus-income #panel-expense,
             .mobile-focus-income #panel-pending,
             .mobile-focus-income #panel-net,
+            .mobile-focus-income #billsSection,
             .mobile-focus-income #upcomingSection {
                 display: none !important;
             }
@@ -1033,15 +1155,25 @@
                 display: none !important;
             }
 
+            .mobile-focus-bills #panel-income,
+            .mobile-focus-bills #panel-expense,
+            .mobile-focus-bills #panel-pending,
+            .mobile-focus-bills #panel-net,
+            .mobile-focus-bills #upcomingSection {
+                display: none !important;
+            }
+
             .mobile-focus-pending #panel-income,
             .mobile-focus-pending #panel-expense,
-            .mobile-focus-pending #panel-net {
+            .mobile-focus-pending #panel-net,
+            .mobile-focus-pending #billsSection {
                 display: none !important;
             }
 
             .mobile-focus-net #panel-income,
             .mobile-focus-net #panel-expense,
             .mobile-focus-net #panel-pending,
+            .mobile-focus-net #billsSection,
             .mobile-focus-net #upcomingSection {
                 display: none !important;
             }
@@ -1118,6 +1250,7 @@
         <button class="focus-tab-btn active" id="tab-all" onclick="setFocusMode('all')">📊 Tüm Özet</button>
         <button class="focus-tab-btn tab-income" id="tab-income" onclick="setFocusMode('income')">📥 Gelir</button>
         <button class="focus-tab-btn tab-expense" id="tab-expense" onclick="setFocusMode('expense')">📤 Gider</button>
+        <button class="focus-tab-btn tab-bills" id="tab-bills" onclick="setFocusMode('bills')">🧾 Faturalar</button>
         <button class="focus-tab-btn tab-pending" id="tab-pending" onclick="setFocusMode('pending')">⏳ Borçlar</button>
     </div>
 
@@ -1228,6 +1361,23 @@
         </div>
     </section>
 
+    <!-- 🧾 KAYITLI FATURALAR BÖLÜMÜ (HER AY DEĞİŞKEN TUTAR, SABİT GÜN) -->
+    <section class="bills-section" id="billsSection">
+        <div class="bills-header">
+            <div class="bills-title">
+                <span>🧾 Düzenli Faturalarım</span>
+                <span class="badge badge-purple" id="billsStatusBadge">0/0 İşlendi</span>
+            </div>
+            <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddBillDefModal()">
+                + Yeni Fatura Tanımla
+            </button>
+        </div>
+        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">
+            Son ödeme günleri kayıtlıdır; fatura SMS'iniz geldikçe sadece bu ayki tutarını yazıp tek tıkla bütçenize ekleyin.
+        </p>
+        <div class="bills-grid" id="billsListContainer"></div>
+    </section>
+
     <!-- UPCOMING RADAR SECTION -->
     <section class="upcoming-section" id="upcomingSection">
         <div class="upcoming-header">
@@ -1253,9 +1403,9 @@
     <button class="nav-item-add" onclick="openAddModal('expense')" title="Hızlı Ekle">
         <span style="font-size:24px; font-weight:800; line-height:1;">+</span>
     </button>
-    <button class="nav-item" id="nav-expense" onclick="setFocusMode('expense')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-        <span>Gider</span>
+    <button class="nav-item" id="nav-bills" onclick="setFocusMode('bills')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        <span>Fatura</span>
     </button>
     <button class="nav-item" id="nav-pending" onclick="setFocusMode('pending')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -1281,7 +1431,8 @@
                 <div class="form-group" id="categoryGroup">
                     <label class="form-label">Gider Grubu</label>
                     <select id="categoryInput" class="form-control">
-                        <option value="fixed">🏠 Sabitler (Kira, Aidat, Fatura)</option>
+                        <option value="bill">🧾 Fatura (Elektrik, Su, Doğalgaz...)</option>
+                        <option value="fixed">🏠 Sabitler (Kira, Aidat)</option>
                         <option value="card">💳 Kart / Kredi / Alışveriş</option>
                     </select>
                 </div>
@@ -1340,6 +1491,47 @@
 
             <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%; justify-content:center; padding:12px; margin-top:8px; font-size:14px;">
                 Kaydet
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- YENİ FATURA TANIMLAMA MODALI -->
+<div class="modal-backdrop" id="billDefModalBackdrop">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Yeni Fatura Şablonu Tanımla</h2>
+            <button class="modal-close" onclick="closeAddBillDefModal()">✕</button>
+        </div>
+        <form onsubmit="saveBillDef(event)">
+            <div class="form-group">
+                <label class="form-label">Fatura Adı</label>
+                <input type="text" id="billDefNameInput" class="form-control" placeholder="Örn: Elektrik, Su, Doğalgaz, Turkcell..." required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Simge</label>
+                    <select id="billDefIconInput" class="form-control">
+                        <option value="⚡">⚡ Elektrik</option>
+                        <option value="🔥">🔥 Doğalgaz</option>
+                        <option value="💧">💧 Su</option>
+                        <option value="🌐">🌐 Ev İnterneti</option>
+                        <option value="📱">📱 Cep Telefonu</option>
+                        <option value="🏠">🏠 Aidat</option>
+                        <option value="📺">📺 TV / Platform</option>
+                        <option value="🚗">🚗 Araç / Sigorta</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Son Ödeme Günü (Ayın Kaçı?)</label>
+                    <input type="number" min="1" max="31" id="billDefDueDayInput" class="form-control" placeholder="Örn: 15" required>
+                </div>
+            </div>
+            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">
+                💡 Bu fatura her ay listenizde otomatik hazır bekler. Faturanız geldiğinde sadece o ayki tutarını yazıp bütçenize eklersiniz.
+            </p>
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:11px;">
+                Fatura Şablonunu Kaydet
             </button>
         </form>
     </div>
@@ -1420,7 +1612,7 @@
     let currentMonth = new Date().getMonth();
     let entryType = 'expense';
     let isInstallment = false;
-    let currentFocusTab = 'all'; // 'all', 'income', 'expense', 'pending', 'net'
+    let currentFocusTab = 'all'; // 'all', 'income', 'expense', 'bills', 'pending', 'net'
 
     let openDrawers = {
         income: false,
@@ -1449,7 +1641,7 @@
                 { id: '1', ym, type: 'income', category: 'income', title: 'Aylık Net Gelir / Maaş', amount: 52000, paid: true, recurring: true },
                 { id: '2', ym, type: 'expense', category: 'fixed', title: 'Ev Kirası', amount: 15000, dueDay: 5, paid: true, recurring: true },
                 { id: '3', ym, type: 'expense', category: 'fixed', title: 'Apartman Aidatı', amount: 750, dueDay: 10, paid: false, recurring: true },
-                { id: '4', ym, type: 'expense', category: 'fixed', title: 'Doğalgaz & Elektrik & İnternet', amount: 2150, dueDay: 14, paid: false, recurring: true },
+                { id: '4', ym, type: 'expense', category: 'bill', title: 'Doğalgaz & Elektrik & İnternet', amount: 2150, dueDay: 14, paid: false, recurring: false },
                 { id: '5', ym, type: 'expense', category: 'card', title: 'Kredi Kartı Ekstresi', amount: 7400, dueDay: 18, paid: false, recurring: false },
                 { id: '6', ym, type: 'expense', category: 'card', title: 'Alışveriş (Taksitli Örnek)', amount: 2200, dueDay: 24, paid: false, instText: '1/6 Taksit' }
             ];
@@ -1464,7 +1656,13 @@
             ],
             data: {
                 'profile_default': {
-                    items: initialItems
+                    items: initialItems,
+                    bills: [
+                        { id: 'b_1', name: 'Elektrik Faturası', icon: '⚡', dueDay: 15 },
+                        { id: 'b_2', name: 'Doğalgaz Faturası', icon: '🔥', dueDay: 22 },
+                        { id: 'b_3', name: 'Su Faturası', icon: '💧', dueDay: 10 },
+                        { id: 'b_4', name: 'Ev İnterneti', icon: '🌐', dueDay: 18 }
+                    ]
                 }
             }
         };
@@ -1499,8 +1697,22 @@
 
     function getActiveItems() {
         const pid = store.activeProfileId || 'profile_default';
-        if (!store.data[pid]) store.data[pid] = { items: [] };
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [] };
         return store.data[pid].items;
+    }
+
+    function getActiveBills() {
+        const pid = store.activeProfileId || 'profile_default';
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [] };
+        if (!store.data[pid].bills) {
+            store.data[pid].bills = [
+                { id: 'b_1', name: 'Elektrik Faturası', icon: '⚡', dueDay: 15 },
+                { id: 'b_2', name: 'Doğalgaz Faturası', icon: '🔥', dueDay: 22 },
+                { id: 'b_3', name: 'Su Faturası', icon: '💧', dueDay: 10 },
+                { id: 'b_4', name: 'Ev İnterneti', icon: '🌐', dueDay: 18 }
+            ];
+        }
+        return store.data[pid].bills;
     }
 
     function showToast(msg) {
@@ -1534,14 +1746,12 @@
     // MOBİL ODAKLANMA MODU (FOCUS MODE)
     function handleCardClick(type) {
         if (window.innerWidth <= 768) {
-            // Mobilde doğrudan o kısma odaklan
             if (currentFocusTab === type) {
                 setFocusMode('all');
             } else {
                 setFocusMode(type);
             }
         } else {
-            // Masaüstünde normal çekmece aç/kapa
             toggleCardDrawer(type);
         }
     }
@@ -1550,7 +1760,7 @@
         currentFocusTab = tab;
         const container = document.getElementById('mainContainer');
         
-        container.classList.remove('mobile-focus-income', 'mobile-focus-expense', 'mobile-focus-pending', 'mobile-focus-net');
+        container.classList.remove('mobile-focus-income', 'mobile-focus-expense', 'mobile-focus-bills', 'mobile-focus-pending', 'mobile-focus-net');
         
         document.querySelectorAll('.focus-tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -1566,12 +1776,13 @@
 
         if (tab !== 'all') {
             container.classList.add(`mobile-focus-${tab}`);
-            openDrawers[tab] = true;
+            if (openDrawers[tab] !== undefined) openDrawers[tab] = true;
             if (backBar) {
                 backBar.style.display = 'flex';
                 const titles = {
                     income: '📥 Gelirler Detayı',
                     expense: '📤 Giderler Detayı',
+                    bills: '🧾 Kayıtlı Faturalarım & Giriş',
                     pending: '⏳ Kalan Borçlar & Radar',
                     net: '🏦 Net Bakiye Özeti'
                 };
@@ -1620,7 +1831,15 @@
 
         const newId = 'profile_' + Date.now();
         store.profiles.push({ id: newId, name, icon });
-        store.data[newId] = { items: [] };
+        store.data[newId] = {
+            items: [],
+            bills: [
+                { id: 'b_1', name: 'Elektrik Faturası', icon: '⚡', dueDay: 15 },
+                { id: 'b_2', name: 'Doğalgaz Faturası', icon: '🔥', dueDay: 22 },
+                { id: 'b_3', name: 'Su Faturası', icon: '💧', dueDay: 10 },
+                { id: 'b_4', name: 'Ev İnterneti', icon: '🌐', dueDay: 18 }
+            ]
+        };
         store.activeProfileId = newId;
 
         saveStore();
@@ -1646,6 +1865,147 @@
             btn.onclick = () => selectProfile(p.id);
             container.appendChild(btn);
         });
+    }
+
+    // 🧾 FATURA ŞABLONLARI & HIZLI GİRİŞ SİSTEMİ
+    function openAddBillDefModal() {
+        document.getElementById('billDefModalBackdrop').classList.add('active');
+        setTimeout(() => document.getElementById('billDefNameInput').focus(), 50);
+    }
+
+    function closeAddBillDefModal() {
+        document.getElementById('billDefModalBackdrop').classList.remove('active');
+        document.getElementById('billDefNameInput').value = '';
+        document.getElementById('billDefDueDayInput').value = '';
+    }
+
+    function saveBillDef(e) {
+        e.preventDefault();
+        const name = document.getElementById('billDefNameInput').value.trim();
+        const icon = document.getElementById('billDefIconInput').value;
+        const dueDay = parseInt(document.getElementById('billDefDueDayInput').value);
+
+        if (!name || isNaN(dueDay) || dueDay < 1 || dueDay > 31) return;
+
+        const bills = getActiveBills();
+        bills.push({
+            id: 'b_' + Date.now(),
+            name,
+            icon,
+            dueDay
+        });
+
+        saveStore();
+        closeAddBillDefModal();
+        showToast(`✔ "${name}" Fatura Şablonu Eklendi`);
+    }
+
+    function deleteBillDef(billId) {
+        if (!confirm("Bu fatura şablonunu silmek istiyor musunuz? (Geçmiş aylardaki harcama kayıtlarınız silinmez)")) return;
+        const pid = store.activeProfileId || 'profile_default';
+        store.data[pid].bills = store.data[pid].bills.filter(b => b.id !== billId);
+        saveStore();
+        showToast("✔ Fatura şablonu silindi");
+    }
+
+    function submitBillAmount(billId) {
+        const inputEl = document.getElementById(`bill-input-${billId}`);
+        if (!inputEl) return;
+        const val = parseFloat(inputEl.value);
+        if (!val || val <= 0) {
+            alert("Lütfen geçerli bir fatura tutarı girin.");
+            return;
+        }
+
+        const bills = getActiveBills();
+        const bill = bills.find(b => b.id === billId);
+        if (!bill) return;
+
+        const pid = store.activeProfileId || 'profile_default';
+        const ym = getMonthKey(currentYear, currentMonth);
+
+        store.data[pid].items.push({
+            id: Date.now().toString(),
+            ym,
+            type: 'expense',
+            category: 'bill',
+            title: bill.name,
+            amount: val,
+            dueDay: bill.dueDay,
+            paid: false,
+            billDefId: bill.id,
+            recurring: false
+        });
+
+        saveStore();
+        showToast(`✔ ${bill.name} (${formatTL(val)}) bu aya eklendi!`);
+    }
+
+    function renderBills(monthItems) {
+        const bills = getActiveBills();
+        const container = document.getElementById('billsListContainer');
+        container.innerHTML = '';
+
+        let enteredCount = 0;
+
+        bills.forEach(b => {
+            // Bu ay için bu faturadan girilmiş mi kontrol et
+            const existingItem = monthItems.find(x => (x.billDefId === b.id) || (x.category === 'bill' && x.title === b.name));
+
+            const card = document.createElement('div');
+            card.className = `bill-card ${existingItem ? 'entered' : 'waiting'}`;
+
+            if (existingItem) {
+                enteredCount++;
+                const st = getDueStatus(existingItem.dueDay, existingItem.paid);
+                card.innerHTML = `
+                    <div class="bill-top">
+                        <div class="bill-info">
+                            <div class="bill-icon">${b.icon || '🧾'}</div>
+                            <div>
+                                <div class="bill-text-name">${b.name}</div>
+                                <div class="bill-text-due">Son Gün: Ayın ${b.dueDay}'i • <span class="badge ${st.cls}">${st.text}</span></div>
+                            </div>
+                        </div>
+                        <button class="del-btn" onclick="deleteItem('${existingItem.id}')" title="Bu Ayki Fatura Kaydını Sil">🗑</button>
+                    </div>
+                    <div class="bill-action-box">
+                        <div>
+                            <span style="font-size:11px; color:var(--text-secondary);">Bu Ayki Tutar:</span>
+                            <div class="num" style="font-size:16px; font-weight:800; color:var(--text-primary);">${formatTL(existingItem.amount)}</div>
+                        </div>
+                        <button class="check-btn ${existingItem.paid ? 'checked' : ''}" onclick="togglePaid('${existingItem.id}')" title="Ödendi İşaretle">
+                            ${existingItem.paid ? '✓' : ''}
+                        </button>
+                    </div>
+                `;
+            } else {
+                card.innerHTML = `
+                    <div class="bill-top">
+                        <div class="bill-info">
+                            <div class="bill-icon">${b.icon || '🧾'}</div>
+                            <div>
+                                <div class="bill-text-name">${b.name}</div>
+                                <div class="bill-text-due">Son Gün: Her Ayın ${b.dueDay}'i • <span class="badge badge-warning">Tutar Bekleniyor</span></div>
+                            </div>
+                        </div>
+                        <button class="del-btn" onclick="deleteBillDef('${b.id}')" title="Fatura Şablonunu Sil">✕</button>
+                    </div>
+                    <div class="bill-action-box">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <input type="number" step="0.01" id="bill-input-${b.id}" class="bill-input-field" placeholder="0.00 ₺">
+                        </div>
+                        <button class="btn btn-primary" style="padding:6px 12px; font-size:12px;" onclick="submitBillAmount('${b.id}')">
+                            + Faturayı Ekle
+                        </button>
+                    </div>
+                `;
+            }
+
+            container.appendChild(card);
+        });
+
+        document.getElementById('billsStatusBadge').textContent = `${enteredCount}/${bills.length} İşlendi`;
     }
 
     // VADE VE GÜN HESAPLAMA
@@ -1707,6 +2067,7 @@
         netEl.textContent = formatTL(net);
         netEl.style.color = net >= 0 ? 'var(--accent)' : 'var(--danger)';
 
+        renderBills(monthItems);
         renderUpcoming(monthItems);
         renderAllDrawers(monthItems, income, expense, pending, net);
     }
@@ -1716,6 +2077,9 @@
         div.className = `item-row ${item.paid && item.type === 'expense' ? 'paid' : ''}`;
 
         let badges = '';
+        if (item.category === 'bill') {
+            badges += `<span class="badge badge-purple">Fatura</span>`;
+        }
         if (item.instText) {
             badges += `<span class="badge badge-purple">${item.instText}</span>`;
         }
@@ -1929,7 +2293,7 @@
         if (!title || isNaN(rawAmount) || rawAmount <= 0) return;
 
         const pid = store.activeProfileId || 'profile_default';
-        if (!store.data[pid]) store.data[pid] = { items: [] };
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [] };
 
         if (entryType === 'expense' && isInstallment) {
             const count = parseInt(document.getElementById('instCountInput').value) || 2;
@@ -2091,6 +2455,7 @@
         if (e.key === 'Escape') {
             closeModal();
             closeProfileModal();
+            closeAddBillDefModal();
             closeBackupModal();
             document.getElementById('profileDropdown').classList.remove('show');
             openDrawers = { income: false, expense: false, pending: false, net: false };
