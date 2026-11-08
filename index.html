@@ -1471,12 +1471,12 @@
 
             <div class="form-row" id="extraOptionsRow">
                 <div class="form-group">
-                    <label class="form-label">Son Ödeme Günü (Ayın Kaçı?)</label>
+                    <label class="form-label" id="dueDayLabel">Son Ödeme Günü (Ayın Kaçı?)</label>
                     <input type="number" min="1" max="31" id="dueDayInput" class="form-control" placeholder="Örn: 15">
                 </div>
                 <div class="form-group" style="display:flex; align-items:center; padding-top:22px; gap:8px;">
                     <input type="checkbox" id="recurringInput" style="width:18px; height:18px; accent-color:var(--accent);">
-                    <label for="recurringInput" style="font-size:13px; cursor:pointer;">Her Ay Sabit Tekrarlar</label>
+                    <label for="recurringInput" id="recurringLabel" style="font-size:13px; cursor:pointer;">Her Ay Sabit Tekrarlar</label>
                 </div>
             </div>
 
@@ -2074,7 +2074,7 @@
         if (item.instText) {
             badges += `<span class="badge badge-purple">${item.instText}</span>`;
         }
-        if (item.recurring && item.type === 'expense') {
+        if (item.recurring) {
             badges += `<span class="badge badge-warning">Sabit</span>`;
         }
 
@@ -2085,7 +2085,11 @@
             const st = getDueStatus(item.dueDay, item.paid);
             statusHTML = `<span class="badge ${st.cls}">${st.text}</span>`;
         } else {
-            statusHTML = `<span class="badge badge-success">Net Gelir</span>`;
+            if (item.dueDay) {
+                statusHTML = `<span class="badge badge-success">💵 Net Gelir</span> <span class="badge badge-info">📅 Ayın ${item.dueDay}'i</span>`;
+            } else {
+                statusHTML = `<span class="badge badge-success">💵 Net Gelir</span>`;
+            }
         }
 
         div.innerHTML = `
@@ -2168,6 +2172,7 @@
             if (type === 'income') {
                 bodyEl.innerHTML = '';
                 const items = monthItems.filter(x => x.type === 'income');
+                items.sort((a, b) => (a.dueDay || 99) - (b.dueDay || 99));
                 if (!items.length) bodyEl.innerHTML = '<div class="empty-state">Gelir kaydı bulunmuyor.</div>';
                 items.forEach(i => bodyEl.appendChild(createRow(i)));
             } else if (type === 'expense') {
@@ -2217,12 +2222,23 @@
         entryType = type;
         document.getElementById('modalBackdrop').classList.add('active');
 
+        const dueDayLabel = document.getElementById('dueDayLabel');
+        const dueDayInput = document.getElementById('dueDayInput');
+        const recurringLabel = document.getElementById('recurringLabel');
+        const recurringInput = document.getElementById('recurringInput');
+
         if (type === 'income') {
             document.getElementById('modalTitle').textContent = '📥 Yeni Gelir Ekle';
             document.getElementById('titleLabel').textContent = 'Gelir Açıklaması (Örn: Maaş, Ek İş, Kira Geliri)';
             document.getElementById('categoryGroup').style.display = 'none';
             document.getElementById('paymentModeWrapper').style.display = 'none';
-            document.getElementById('extraOptionsRow').style.display = 'none';
+            document.getElementById('extraOptionsRow').style.display = 'grid';
+
+            if (dueDayLabel) dueDayLabel.textContent = 'Gelir Tarihi / Günü (Ayın Kaçı?)';
+            if (dueDayInput) { dueDayInput.placeholder = 'Örn: 15 (Maaş / Tahsilat Günü)'; dueDayInput.value = ''; }
+            if (recurringLabel) recurringLabel.textContent = 'Her Ay Düzenli Gelir (Örn: Maaş)';
+            if (recurringInput) recurringInput.checked = true;
+
             document.getElementById('submitBtn').style.background = 'var(--success)';
             document.getElementById('submitBtn').textContent = '+ Geliri Kaydet';
         } else {
@@ -2232,6 +2248,12 @@
             document.getElementById('categoryInput').value = defaultCategory;
             document.getElementById('paymentModeWrapper').style.display = 'block';
             document.getElementById('extraOptionsRow').style.display = 'grid';
+
+            if (dueDayLabel) dueDayLabel.textContent = 'Son Ödeme Günü (Ayın Kaçı?)';
+            if (dueDayInput) { dueDayInput.placeholder = 'Örn: 15'; dueDayInput.value = ''; }
+            if (recurringLabel) recurringLabel.textContent = 'Her Ay Sabit Tekrarlar';
+            if (recurringInput) recurringInput.checked = (defaultCategory === 'fixed');
+
             document.getElementById('submitBtn').style.background = 'var(--accent)';
             document.getElementById('submitBtn').textContent = '+ Gideri Kaydet';
         }
@@ -2284,7 +2306,7 @@
         const rawAmount = parseFloat(document.getElementById('amountInput').value);
         const category = entryType === 'income' ? 'income' : document.getElementById('categoryInput').value;
         const dueDay = parseInt(document.getElementById('dueDayInput').value) || null;
-        const recurring = entryType === 'income' ? true : document.getElementById('recurringInput').checked;
+        const recurring = document.getElementById('recurringInput').checked;
 
         if (!title || isNaN(rawAmount) || rawAmount <= 0) return;
 
