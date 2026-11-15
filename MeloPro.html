@@ -920,6 +920,184 @@
             gap: 8px;
         }
 
+        /* 🔐 ŞİFRE KASASI (VAULT) STİLLERİ */
+        .modal-vault {
+            max-width: 720px;
+            width: 100%;
+        }
+
+        .vault-security-banner {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .vault-controls-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .vault-search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .vault-search-box input {
+            width: 100%;
+            padding: 9px 12px 9px 34px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            font-size: 13px;
+            outline: none;
+        }
+
+        .vault-search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .vault-filter-pills {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 14px;
+        }
+
+        .vault-pill {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+        }
+
+        .vault-pill.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .vault-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+            max-height: 52vh;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .vault-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .vault-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .vault-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .vault-card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .vault-card-icon {
+            font-size: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .vault-card-title {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .vault-field-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-input);
+            padding: 7px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 13px;
+            margin-top: 5px;
+            gap: 6px;
+        }
+
+        .vault-field-val {
+            font-family: monospace;
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        .vault-btn-icon {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 5px 7px;
+            border-radius: 6px;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.15s;
+        }
+
+        .vault-btn-icon:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+
         /* UPCOMING RADAR SECTION */
         .upcoming-section {
             background: var(--bg-card);
@@ -1320,6 +1498,9 @@
         </div>
 
         <div class="actions">
+            <button class="btn" onclick="openVaultModal()" title="Kişisel Şifre Kasası (100% Yerel & Güvenli)" style="font-weight:700;">
+                <span>🔐</span> Şifre Kasası
+            </button>
             <button class="btn" onclick="copyRecurring()" title="Önceki ayın sabit gider ve gelirlerini bu aya aktarır">
                 <span>↻</span> Sabitleri Aktar
             </button>
@@ -1757,6 +1938,215 @@
     </div>
 </div>
 
+<!-- 🔐 ANA ŞİFRE KASASI MODALI -->
+<div class="modal-backdrop" id="vaultModalBackdrop">
+    <div class="modal modal-vault">
+        <div class="modal-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:22px;">🔐</span>
+                <div>
+                    <h2 style="font-size:18px; margin:0;">Kişisel Şifre Kasası</h2>
+                    <span style="font-size:11px; color:var(--text-secondary);" id="vaultProfileSub">Benim Bütçem Profili</span>
+                </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+                <button class="btn" style="padding:5px 9px; font-size:11px;" onclick="openSetPinModal()" id="vaultPinSettingBtn" title="PIN Koruması">
+                    🔒 PIN Ayarı
+                </button>
+                <button class="btn" style="padding:5px 9px; font-size:11px; display:none;" onclick="lockVault()" id="vaultLockNowBtn" title="Kasayı Şimdi Kilitle">
+                    🔒 Kilitle
+                </button>
+                <button class="modal-close" onclick="closeVaultModal()">✕</button>
+            </div>
+        </div>
+
+        <div class="vault-security-banner">
+            <span>🛡️</span>
+            <span><strong>%100 Yerel & Çevrimdışı:</strong> Şifreleriniz sadece bu cihazda saklanır; asla sunucuya veya internete gönderilmez.</span>
+        </div>
+
+        <div class="vault-controls-row">
+            <div class="vault-search-box">
+                <span class="vault-search-icon">🔍</span>
+                <input type="text" id="vaultSearchInput" placeholder="Başlık, hesap veya kullanıcı adı ara..." oninput="handleVaultSearch(this.value)">
+            </div>
+            <button class="btn btn-primary" style="padding:8px 14px; font-size:12px;" onclick="openAddPasswordModal()">
+                + Yeni Şifre Ekle
+            </button>
+            <button class="btn" style="padding:8px 12px; font-size:12px;" onclick="openPasswordGeneratorModal()">
+                🎲 Şifre Üret
+            </button>
+        </div>
+
+        <div class="vault-filter-pills" id="vaultFilterPills">
+            <button class="vault-pill active" onclick="setVaultFilter('all')">Tümü (<span id="vaultCountAll">0</span>)</button>
+            <button class="vault-pill" onclick="setVaultFilter('bank')">🏦 Banka</button>
+            <button class="vault-pill" onclick="setVaultFilter('email')">📧 E-Posta</button>
+            <button class="vault-pill" onclick="setVaultFilter('social')">🌐 Sosyal</button>
+            <button class="vault-pill" onclick="setVaultFilter('shopping')">🛒 Alışveriş</button>
+            <button class="vault-pill" onclick="setVaultFilter('work')">💼 İş</button>
+            <button class="vault-pill" onclick="setVaultFilter('other')">🔑 Diğer</button>
+        </div>
+
+        <div class="vault-grid" id="vaultItemsContainer"></div>
+    </div>
+</div>
+
+<!-- 🔐 ŞİFRE EKLE / DÜZENLE MODALI -->
+<div class="modal-backdrop" id="vaultEntryModalBackdrop" style="z-index: 220;">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="vaultEntryModalTitle">🔐 Yeni Şifre Ekle</h2>
+            <button class="modal-close" onclick="closeAddPasswordModal()">✕</button>
+        </div>
+        <form onsubmit="savePasswordEntry(event)">
+            <div class="form-group">
+                <label class="form-label">Hesap / Servis Adı</label>
+                <input type="text" id="vaultTitleInput" class="form-control" placeholder="Örn: Garanti BBVA, Gmail, Netflix, Trendyol..." required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Kategori</label>
+                <select id="vaultCategoryInput" class="form-control">
+                    <option value="bank">🏦 Banka & Finans</option>
+                    <option value="email">📧 E-Posta</option>
+                    <option value="social">🌐 Sosyal Medya</option>
+                    <option value="shopping">🛒 Alışveriş</option>
+                    <option value="work">💼 İş & Hizmetler</option>
+                    <option value="other">🔑 Diğer / Genel</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Kullanıcı Adı / E-Posta / Telefon</label>
+                <input type="text" id="vaultUsernameInput" class="form-control" placeholder="Örn: kullanici@gmail.com veya 0532..." required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <label class="form-label" style="margin-bottom:0;">Şifre</label>
+                    <button type="button" class="btn" style="padding:2px 8px; font-size:11px;" onclick="fillGeneratedPassword()">
+                        🎲 Rastgele Güçlü Üret
+                    </button>
+                </div>
+                <div style="position:relative; display:flex; align-items:center;">
+                    <input type="password" id="vaultPasswordInput" class="form-control" placeholder="Şifrenizi yazın..." required style="padding-right:40px;" autocomplete="new-password">
+                    <button type="button" class="vault-btn-icon" style="position:absolute; right:8px;" onclick="toggleVaultPasswordInput()" title="Göster / Gizle" id="vaultEyeBtn">
+                        👁
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Web Sitesi / Giriş Adresi (Opsiyonel)</label>
+                <input type="text" id="vaultUrlInput" class="form-control" placeholder="Örn: https://garantibbva.com.tr" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Güvenlik Notları (Opsiyonel)</label>
+                <textarea id="vaultNotesInput" class="form-control" style="resize:vertical; min-height:55px;" placeholder="Gizli soru, ek pin veya kurtarma kodları..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:12px; margin-top:6px;">
+                Şifreyi Güvenle Kaydet
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- 🔒 KASA PIN KİLİDİ AÇMA MODALI -->
+<div class="modal-backdrop" id="vaultPinPromptModalBackdrop" style="z-index: 230;">
+    <div class="modal" style="max-width:360px; text-align:center;">
+        <div style="font-size:36px; margin-bottom:8px;">🔒</div>
+        <h2 style="font-size:18px; font-weight:800; margin-bottom:6px;">Şifre Kasası Kilitli</h2>
+        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:16px;">
+            Kasanızı görüntülemek için lütfen PIN kodunuzu girin.
+        </p>
+        <form onsubmit="unlockVault(event)">
+            <input type="password" inputmode="numeric" id="vaultUnlockPinInput" class="form-control" placeholder="••••" maxlength="8" style="text-align:center; font-size:24px; letter-spacing:8px; font-weight:800; margin-bottom:14px;" required autofocus>
+            <div style="display:flex; gap:8px;">
+                <button type="button" class="btn" style="flex:1; justify-content:center;" onclick="closeVaultPinPromptModal()">İptal</button>
+                <button type="submit" class="btn btn-primary" style="flex:2; justify-content:center;">🔓 Kilidi Aç</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ⚙️ PIN AYARLAMA MODALI -->
+<div class="modal-backdrop" id="vaultSetPinModalBackdrop" style="z-index: 240;">
+    <div class="modal" style="max-width:380px;">
+        <div class="modal-header">
+            <h2>🔒 Kasa PIN Koruması</h2>
+            <button class="modal-close" onclick="closeSetPinModal()">✕</button>
+        </div>
+        <form onsubmit="savePinSetting(event)">
+            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">
+                Cihazınızda şifre kasanıza başkalarının erişmesini engellemek için 4-8 haneli bir PIN kodu belirleyebilirsiniz.
+            </p>
+            <div class="form-group">
+                <label class="form-label">Yeni PIN Kodu</label>
+                <input type="password" inputmode="numeric" id="vaultNewPinInput" class="form-control" placeholder="Boş bırakırsanız PIN iptal edilir" maxlength="8">
+            </div>
+            <p style="font-size:11px; color:var(--text-muted); margin-bottom:14px;">
+                💡 PIN korumasını kaldırmak için kutuyu boş bırakıp kaydedebilirsiniz.
+            </p>
+            <div style="display:flex; gap:8px;">
+                <button type="button" class="btn" style="flex:1; justify-content:center;" onclick="closeSetPinModal()">İptal</button>
+                <button type="submit" class="btn btn-primary" style="flex:1; justify-content:center;">PIN'i Kaydet</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 🎲 ŞİFRE ÜRETİCİ MODALI -->
+<div class="modal-backdrop" id="vaultGenModalBackdrop" style="z-index: 250;">
+    <div class="modal" style="max-width:420px;">
+        <div class="modal-header">
+            <h2>🎲 Güçlü Şifre Üretici</h2>
+            <button class="modal-close" onclick="closePasswordGeneratorModal()">✕</button>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+            <div style="background:var(--bg-input); padding:14px; border-radius:10px; border:1px solid var(--border); text-align:center;">
+                <div id="genResultBox" style="font-family:monospace; font-size:18px; font-weight:800; color:var(--accent); word-break:break-all; user-select:all; margin-bottom:8px;"></div>
+                <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="copyGeneratedPassword()">
+                    📋 Şifreyi Kopyala
+                </button>
+            </div>
+
+            <div class="form-group">
+                <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+                    <span>Şifre Uzunluğu:</span>
+                    <strong id="genLenLabel">16 Karakter</strong>
+                </div>
+                <input type="range" min="8" max="32" value="16" id="genLenRange" style="width:100%; accent-color:var(--accent);" oninput="updateGenLength(this.value)">
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:12px;">
+                <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="genUpper" checked onchange="regeneratePassword()" style="accent-color:var(--accent);">
+                    <span>Büyük Harf (A-Z)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="genLower" checked onchange="regeneratePassword()" style="accent-color:var(--accent);">
+                    <span>Küçük Harf (a-z)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="genNums" checked onchange="regeneratePassword()" style="accent-color:var(--accent);">
+                    <span>Rakamlar (0-9)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="genSyms" checked onchange="regeneratePassword()" style="accent-color:var(--accent);">
+                    <span>Semboller (!@#$)</span>
+                </label>
+            </div>
+
+            <button class="btn" style="width:100%; justify-content:center; padding:10px;" onclick="regeneratePassword()">
+                🔄 Yeni Şifre Üret
+            </button>
+        </div>
+    </div>
+</div>
+
 <div class="status-toast" id="toast">✔ Kaydedildi</div>
 
 <script>
@@ -1820,7 +2210,8 @@
                     ],
                     cards: [
                         { id: 'c_1', name: 'Bonus Kart', icon: '💳', cutoffDay: 10, dueDay: 20 }
-                    ]
+                    ],
+                    passwords: []
                 }
             }
         };
@@ -1855,13 +2246,13 @@
 
     function getActiveItems() {
         const pid = store.activeProfileId || 'profile_default';
-        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [] };
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [], passwords: [] };
         return store.data[pid].items;
     }
 
     function getActiveBills() {
         const pid = store.activeProfileId || 'profile_default';
-        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [] };
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [], passwords: [] };
         if (!store.data[pid].bills) {
             store.data[pid].bills = [
                 { id: 'b_1', name: 'Elektrik Faturası', icon: '⚡', dueDay: 15 },
@@ -1875,13 +2266,22 @@
 
     function getActiveCards() {
         const pid = store.activeProfileId || 'profile_default';
-        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [] };
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [], passwords: [] };
         if (!store.data[pid].cards) {
             store.data[pid].cards = [
                 { id: 'c_1', name: 'Bonus Kart', icon: '💳', cutoffDay: 10, dueDay: 20 }
             ];
         }
         return store.data[pid].cards;
+    }
+
+    function getActivePasswords() {
+        const pid = store.activeProfileId || 'profile_default';
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [], passwords: [] };
+        if (!store.data[pid].passwords) {
+            store.data[pid].passwords = [];
+        }
+        return store.data[pid].passwords;
     }
 
     function showToast(msg) {
@@ -2009,7 +2409,8 @@
             ],
             cards: [
                 { id: 'c_1', name: 'Bonus Kart', icon: '💳', cutoffDay: 10, dueDay: 20 }
-            ]
+            ],
+            passwords: []
         };
         store.activeProfileId = newId;
 
@@ -2359,6 +2760,409 @@
         if (badge) badge.textContent = `${enteredCount}/${cards.length} İşlendi`;
     }
 
+    // 🔐 KİŞİSEL ŞİFRE KASASI (VAULT) SİSTEMİ
+    let isVaultUnlocked = false;
+    let currentVaultFilter = 'all';
+    let currentVaultSearch = '';
+    let editingPasswordId = null;
+    let visiblePasswords = {};
+    let generatedPasswordLength = 16;
+
+    const vaultCategories = {
+        bank: { name: 'Banka & Finans', icon: '🏦', badge: 'badge-purple' },
+        email: { name: 'E-Posta', icon: '📧', badge: 'badge-info' },
+        social: { name: 'Sosyal Medya', icon: '🌐', badge: 'badge-purple' },
+        shopping: { name: 'Alışveriş', icon: '🛒', badge: 'badge-warning' },
+        work: { name: 'İş & Hizmetler', icon: '💼', badge: 'badge-success' },
+        other: { name: 'Diğer / Genel', icon: '🔑', badge: 'badge-info' }
+    };
+
+    function openVaultModal() {
+        const hasPin = Boolean(store.vaultPin && store.vaultPin.trim());
+        if (hasPin && !isVaultUnlocked) {
+            document.getElementById('vaultPinPromptModalBackdrop').classList.add('active');
+            const pinIn = document.getElementById('vaultUnlockPinInput');
+            if (pinIn) { pinIn.value = ''; setTimeout(() => pinIn.focus(), 60); }
+            return;
+        }
+
+        const currP = store.profiles.find(p => p.id === store.activeProfileId) || store.profiles[0];
+        const subEl = document.getElementById('vaultProfileSub');
+        if (subEl) subEl.textContent = `${currP.icon || '👤'} ${currP.name} Kasası`;
+
+        const lockBtn = document.getElementById('vaultLockNowBtn');
+        if (lockBtn) lockBtn.style.display = hasPin ? 'inline-flex' : 'none';
+
+        document.getElementById('vaultModalBackdrop').classList.add('active');
+        renderVaultItems();
+    }
+
+    function closeVaultModal() {
+        document.getElementById('vaultModalBackdrop').classList.remove('active');
+    }
+
+    function lockVault() {
+        isVaultUnlocked = false;
+        closeVaultModal();
+        showToast("🔒 Şifre Kasası Kilitlendi");
+    }
+
+    function unlockVault(e) {
+        e.preventDefault();
+        const pinIn = document.getElementById('vaultUnlockPinInput');
+        const val = pinIn.value.trim();
+        if (val === store.vaultPin) {
+            isVaultUnlocked = true;
+            document.getElementById('vaultPinPromptModalBackdrop').classList.remove('active');
+            openVaultModal();
+            showToast("🔓 Kasa Açıldı");
+        } else {
+            alert("Hatalı PIN Kodu! Lütfen tekrar deneyin.");
+            pinIn.value = '';
+            pinIn.focus();
+        }
+    }
+
+    function closeVaultPinPromptModal() {
+        document.getElementById('vaultPinPromptModalBackdrop').classList.remove('active');
+    }
+
+    function openSetPinModal() {
+        document.getElementById('vaultSetPinModalBackdrop').classList.add('active');
+        const pinInput = document.getElementById('vaultNewPinInput');
+        if (pinInput) {
+            pinInput.value = store.vaultPin || '';
+            setTimeout(() => pinInput.focus(), 60);
+        }
+    }
+
+    function closeSetPinModal() {
+        document.getElementById('vaultSetPinModalBackdrop').classList.remove('active');
+    }
+
+    function savePinSetting(e) {
+        e.preventDefault();
+        const pinVal = document.getElementById('vaultNewPinInput').value.trim();
+        if (pinVal) {
+            store.vaultPin = pinVal;
+            isVaultUnlocked = true;
+            showToast("🔒 PIN Koruması Aktifleştirildi");
+        } else {
+            store.vaultPin = null;
+            isVaultUnlocked = true;
+            showToast("🔓 PIN Koruması Kaldırıldı");
+        }
+        saveStore(false);
+        closeSetPinModal();
+        const lockBtn = document.getElementById('vaultLockNowBtn');
+        if (lockBtn) lockBtn.style.display = store.vaultPin ? 'inline-flex' : 'none';
+    }
+
+    function openAddPasswordModal(editId = null) {
+        editingPasswordId = editId;
+        const modal = document.getElementById('vaultEntryModalBackdrop');
+        const titleEl = document.getElementById('vaultEntryModalTitle');
+        const eyeBtn = document.getElementById('vaultEyeBtn');
+        const passIn = document.getElementById('vaultPasswordInput');
+        passIn.type = 'password';
+        if (eyeBtn) eyeBtn.textContent = '👁';
+
+        if (editId) {
+            const list = getActivePasswords();
+            const item = list.find(x => x.id === editId);
+            if (item) {
+                titleEl.textContent = '✏ Şifreyi Düzenle';
+                document.getElementById('vaultTitleInput').value = item.title || '';
+                document.getElementById('vaultCategoryInput').value = item.category || 'other';
+                document.getElementById('vaultUsernameInput').value = item.username || '';
+                document.getElementById('vaultPasswordInput').value = item.password || '';
+                document.getElementById('vaultUrlInput').value = item.url || '';
+                document.getElementById('vaultNotesInput').value = item.notes || '';
+            }
+        } else {
+            titleEl.textContent = '🔐 Yeni Şifre Ekle';
+            document.getElementById('vaultTitleInput').value = '';
+            document.getElementById('vaultCategoryInput').value = 'bank';
+            document.getElementById('vaultUsernameInput').value = '';
+            document.getElementById('vaultPasswordInput').value = '';
+            document.getElementById('vaultUrlInput').value = '';
+            document.getElementById('vaultNotesInput').value = '';
+        }
+
+        modal.classList.add('active');
+        setTimeout(() => document.getElementById('vaultTitleInput').focus(), 60);
+    }
+
+    function closeAddPasswordModal() {
+        document.getElementById('vaultEntryModalBackdrop').classList.remove('active');
+        editingPasswordId = null;
+    }
+
+    function toggleVaultPasswordInput() {
+        const passIn = document.getElementById('vaultPasswordInput');
+        const eyeBtn = document.getElementById('vaultEyeBtn');
+        if (passIn.type === 'password') {
+            passIn.type = 'text';
+            eyeBtn.textContent = '🙈';
+        } else {
+            passIn.type = 'password';
+            eyeBtn.textContent = '👁';
+        }
+    }
+
+    function fillGeneratedPassword() {
+        const pwd = generateSecurePassword(16, true, true, true, true);
+        const passIn = document.getElementById('vaultPasswordInput');
+        passIn.value = pwd;
+        passIn.type = 'text';
+        const eyeBtn = document.getElementById('vaultEyeBtn');
+        if (eyeBtn) eyeBtn.textContent = '🙈';
+        showToast("🎲 Güçlü şifre oluşturuldu ve yazıldı");
+    }
+
+    function savePasswordEntry(e) {
+        e.preventDefault();
+        const title = document.getElementById('vaultTitleInput').value.trim();
+        const category = document.getElementById('vaultCategoryInput').value;
+        const username = document.getElementById('vaultUsernameInput').value.trim();
+        const password = document.getElementById('vaultPasswordInput').value;
+        const url = document.getElementById('vaultUrlInput').value.trim();
+        const notes = document.getElementById('vaultNotesInput').value.trim();
+
+        if (!title || !username || !password) return;
+
+        const list = getActivePasswords();
+        const nowStr = new Date().toLocaleDateString('tr-TR');
+
+        if (editingPasswordId) {
+            const item = list.find(x => x.id === editingPasswordId);
+            if (item) {
+                item.title = title;
+                item.category = category;
+                item.username = username;
+                item.password = password;
+                item.url = url;
+                item.notes = notes;
+                item.updatedAt = nowStr;
+                showToast(`✔ "${title}" Güncellendi`);
+            }
+        } else {
+            list.push({
+                id: 'pwd_' + Date.now(),
+                title,
+                category,
+                username,
+                password,
+                url,
+                notes,
+                createdAt: nowStr,
+                updatedAt: nowStr
+            });
+            showToast(`✔ "${title}" Kasaya Eklendi`);
+        }
+
+        saveStore(false);
+        closeAddPasswordModal();
+        renderVaultItems();
+    }
+
+    function deletePasswordEntry(id) {
+        if (!confirm("Bu şifre kaydını silmek istediğinizden emin misiniz?")) return;
+        const pid = store.activeProfileId || 'profile_default';
+        store.data[pid].passwords = (store.data[pid].passwords || []).filter(x => x.id !== id);
+        saveStore(false);
+        renderVaultItems();
+        showToast("✔ Şifre Silindi");
+    }
+
+    function togglePasswordVisibility(id) {
+        visiblePasswords[id] = !visiblePasswords[id];
+        renderVaultItems();
+    }
+
+    function setVaultFilter(cat) {
+        currentVaultFilter = cat;
+        document.querySelectorAll('.vault-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${cat}'`));
+        });
+        renderVaultItems();
+    }
+
+    function handleVaultSearch(query) {
+        currentVaultSearch = (query || '').toLowerCase().trim();
+        renderVaultItems();
+    }
+
+    function renderVaultItems() {
+        const container = document.getElementById('vaultItemsContainer');
+        if (!container) return;
+
+        const allItems = getActivePasswords();
+        const countAll = document.getElementById('vaultCountAll');
+        if (countAll) countAll.textContent = allItems.length;
+
+        let filtered = allItems;
+        if (currentVaultFilter !== 'all') {
+            filtered = filtered.filter(x => x.category === currentVaultFilter);
+        }
+
+        if (currentVaultSearch) {
+            filtered = filtered.filter(x =>
+                (x.title && x.title.toLowerCase().includes(currentVaultSearch)) ||
+                (x.username && x.username.toLowerCase().includes(currentVaultSearch)) ||
+                (x.notes && x.notes.toLowerCase().includes(currentVaultSearch))
+            );
+        }
+
+        container.innerHTML = '';
+
+        if (!filtered.length) {
+            container.innerHTML = `
+                <div class="empty-state" style="grid-column: 1/-1; padding:24px;">
+                    <div style="font-size:32px; margin-bottom:8px;">🔑</div>
+                    ${currentVaultSearch ? 'Aramanıza uygun şifre bulunamadı.' : 'Henüz bu kategoride kayıtlı şifreniz bulunmuyor.'}<br>
+                    <button class="btn btn-primary" style="margin-top:12px; font-size:12px; padding:6px 14px;" onclick="openAddPasswordModal()">
+                        + Yeni Şifre Ekle
+                    </button>
+                </div>
+            `;
+            return;
+        }
+
+        filtered.forEach(item => {
+            const catInfo = vaultCategories[item.category] || vaultCategories.other;
+            const isVisible = Boolean(visiblePasswords[item.id]);
+
+            const card = document.createElement('div');
+            card.className = 'vault-card';
+
+            const cleanUrl = (item.url || '').replace(/^https?:\/\//i, '').replace(/\/$/, '');
+
+            card.innerHTML = `
+                <div>
+                    <div class="vault-card-header">
+                        <div class="vault-card-title-group">
+                            <div class="vault-card-icon">${catInfo.icon}</div>
+                            <div>
+                                <div class="vault-card-title">${item.title}</div>
+                                <span class="badge ${catInfo.badge}" style="font-size:10px; padding:2px 6px;">${catInfo.name}</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:4px;">
+                            <button class="vault-btn-icon" onclick="openAddPasswordModal('${item.id}')" title="Düzenle">✏</button>
+                            <button class="vault-btn-icon" style="color:var(--danger);" onclick="deletePasswordEntry('${item.id}')" title="Sil">🗑</button>
+                        </div>
+                    </div>
+
+                    <!-- KULLANICI ADI -->
+                    <div class="vault-field-row" style="margin-top:10px;">
+                        <span style="font-size:11px; color:var(--text-secondary); width:55px;">Kullanıcı:</span>
+                        <span class="vault-field-val" title="${item.username}">${item.username}</span>
+                        <button class="vault-btn-icon" onclick="copyToClipboard('${item.username.replace(/'/g, "\\'")}', '📋 Kullanıcı adı kopyalandı!')" title="Kullanıcı Adını Kopyala">
+                            📋
+                        </button>
+                    </div>
+
+                    <!-- ŞİFRE -->
+                    <div class="vault-field-row">
+                        <span style="font-size:11px; color:var(--text-secondary); width:55px;">Şifre:</span>
+                        <span class="vault-field-val" style="letter-spacing:${isVisible ? 'normal' : '2px'}; font-weight:700;">
+                            ${isVisible ? item.password : '••••••••••••'}
+                        </span>
+                        <button class="vault-btn-icon" onclick="togglePasswordVisibility('${item.id}')" title="${isVisible ? 'Gizle' : 'Göster'}">
+                            ${isVisible ? '🙈' : '👁'}
+                        </button>
+                        <button class="vault-btn-icon" onclick="copyToClipboard('${item.password.replace(/'/g, "\\'")}', '📋 Şifre kopyalandı!')" title="Şifreyi Kopyala">
+                            📋
+                        </button>
+                    </div>
+
+                    ${item.url ? `
+                    <div style="margin-top:6px; font-size:11px;">
+                        <a href="${item.url.startsWith('http') ? item.url : 'https://' + item.url}" target="_blank" rel="noopener noreferrer" style="color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                            🔗 ${cleanUrl}
+                        </a>
+                    </div>
+                    ` : ''}
+
+                    ${item.notes ? `
+                    <div style="margin-top:6px; font-size:11px; color:var(--text-secondary); background:var(--bg-input); padding:6px 8px; border-radius:6px; border:1px solid var(--border);">
+                        📝 ${item.notes}
+                    </div>
+                    ` : ''}
+                </div>
+
+                <div style="font-size:10px; color:var(--text-muted); text-align:right; border-top:1px dashed var(--border); padding-top:6px; margin-top:6px;">
+                    ${item.updatedAt ? `Güncellendi: ${item.updatedAt}` : ''}
+                </div>
+            `;
+
+            container.appendChild(card);
+        });
+    }
+
+    // 🎲 ŞİFRE ÜRETİCİ
+    function generateSecurePassword(length = 16, upper = true, lower = true, nums = true, syms = true) {
+        let chars = '';
+        if (lower) chars += 'abcdefghjkmnpqrstuvwxyz';
+        if (upper) chars += 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+        if (nums) chars += '23456789';
+        if (syms) chars += '!@#$%^&*()_+~|}{[]:;?><,.-=';
+        if (!chars) chars = 'abcdefghjkmnpqrstuvwxyz23456789';
+
+        let pwd = '';
+        const array = new Uint32Array(length);
+        window.crypto.getRandomValues(array);
+        for (let i = 0; i < length; i++) {
+            pwd += chars[array[i] % chars.length];
+        }
+        return pwd;
+    }
+
+    function openPasswordGeneratorModal() {
+        document.getElementById('vaultGenModalBackdrop').classList.add('active');
+        regeneratePassword();
+    }
+
+    function closePasswordGeneratorModal() {
+        document.getElementById('vaultGenModalBackdrop').classList.remove('active');
+    }
+
+    function updateGenLength(val) {
+        generatedPasswordLength = parseInt(val);
+        document.getElementById('genLenLabel').textContent = `${val} Karakter`;
+        regeneratePassword();
+    }
+
+    function regeneratePassword() {
+        const upper = document.getElementById('genUpper').checked;
+        const lower = document.getElementById('genLower').checked;
+        const nums = document.getElementById('genNums').checked;
+        const syms = document.getElementById('genSyms').checked;
+        const pwd = generateSecurePassword(generatedPasswordLength, upper, lower, nums, syms);
+        const box = document.getElementById('genResultBox');
+        if (box) box.textContent = pwd;
+    }
+
+    function copyGeneratedPassword() {
+        const box = document.getElementById('genResultBox');
+        if (box && box.textContent) {
+            copyToClipboard(box.textContent, "📋 Güçlü şifre panoya kopyalandı!");
+        }
+    }
+
+    function copyToClipboard(text, msg = "✔ Kopyalandı!") {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(msg);
+            }).catch(() => {
+                prompt("Kopyalayın:", text);
+            });
+        } else {
+            prompt("Kopyalayın:", text);
+        }
+    }
+
     // VADE VE GÜN HESAPLAMA
     function getDueStatus(dueDay, paid) {
         if (paid) return { text: '✔ Ödendi', cls: 'badge-success', diff: 999 };
@@ -2677,7 +3481,7 @@
         if (!title || isNaN(rawAmount) || rawAmount <= 0) return;
 
         const pid = store.activeProfileId || 'profile_default';
-        if (!store.data[pid]) store.data[pid] = { items: [], bills: [] };
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [], passwords: [] };
 
         if (entryType === 'expense' && isInstallment) {
             const count = parseInt(document.getElementById('instCountInput').value) || 2;
@@ -2842,6 +3646,11 @@
             closeAddBillDefModal();
             closeAddCardDefModal();
             closeBackupModal();
+            closeVaultModal();
+            closeAddPasswordModal();
+            closeVaultPinPromptModal();
+            closeSetPinModal();
+            closePasswordGeneratorModal();
             document.getElementById('profileDropdown').classList.remove('show');
             openDrawers = { income: false, expense: false, pending: false, net: false };
             render();
