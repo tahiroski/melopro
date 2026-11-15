@@ -818,6 +818,108 @@
             border-color: var(--accent);
         }
 
+        /* 💳 GİDER İÇİNE ENTEGRE KREDİ KARTLARI BÖLÜMÜ */
+        .cards-embedded-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .cards-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .cards-title {
+            font-size: 14px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .credit-card-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .credit-card-box.entered {
+            border-color: rgba(16, 185, 129, 0.4);
+            background: rgba(16, 185, 129, 0.06);
+        }
+
+        .credit-card-box.waiting {
+            border: 1px dashed rgba(59, 130, 246, 0.5);
+            background: rgba(59, 130, 246, 0.04);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .card-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-icon {
+            font-size: 20px;
+            background: var(--bg-input);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .card-text-name {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .card-text-due {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .card-action-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 8px;
+            border-top: 1px dashed var(--border);
+            gap: 8px;
+        }
+
         /* UPCOMING RADAR SECTION */
         .upcoming-section {
             background: var(--bg-card);
@@ -1283,13 +1385,13 @@
                     <div class="kpi-value num" id="kpiExpense" style="color:var(--danger)">0,00 ₺</div>
                 </div>
                 <div class="kpi-footer">
-                    <span>Faturalar, Sabitler & Alışveriş</span>
-                    <span id="arrow-expense">▼ Detaylar & Faturalar</span>
+                    <span>Faturalar, Kartlar & Harcamalar</span>
+                    <span id="arrow-expense">▼ Detaylar & Kart/Fatura</span>
                 </div>
             </div>
             <div class="inline-drawer" id="drawer-expense">
                 <div class="inline-drawer-header">
-                    <span>📤 Bu Ayki Giderler & Düzenli Faturalar</span>
+                    <span>📤 Bu Ayki Giderler, Kredi Kartları & Faturalar</span>
                     <button class="btn" style="padding:2px 8px; font-size:11px;" onclick="closeCardDrawer('expense')">✕ Kapat</button>
                 </div>
                 <div class="inline-drawer-body">
@@ -1308,6 +1410,23 @@
                             Son ödeme günleri kayıtlıdır; fatura SMS'iniz geldikçe sadece bu ayki tutarını yazıp ekleyin.
                         </p>
                         <div class="bills-grid" id="billsListContainer"></div>
+                    </div>
+
+                    <!-- 💳 ENTEGRE KREDİ KARTLARI BLOĞU -->
+                    <div class="cards-embedded-box">
+                        <div class="cards-header">
+                            <div class="cards-title">
+                                <span>💳 Kredi Kartlarım</span>
+                                <span class="badge badge-purple" id="cardsStatusBadge">0/0 İşlendi</span>
+                            </div>
+                            <button class="btn btn-primary" style="padding:4px 10px; font-size:11px;" onclick="openAddCardDefModal()">
+                                + Yeni Kart Tanımla
+                            </button>
+                        </div>
+                        <p style="font-size:11px; color:var(--text-secondary); margin-bottom:8px;">
+                            Hesap kesim ve son ödeme günleri kayıtlıdır; ekstre kesildiğinde bu ayki güncel borç tutarını yazıp ekleyin.
+                        </p>
+                        <div class="cards-grid" id="cardsListContainer"></div>
                     </div>
 
                     <!-- 📋 TÜM DİĞER GİDERLER LİSTESİ -->
@@ -1528,6 +1647,51 @@
     </div>
 </div>
 
+<!-- YENİ KREDİ KARTI TANIMLAMA MODALI -->
+<div class="modal-backdrop" id="cardDefModalBackdrop">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>💳 Yeni Kredi Kartı Tanımla</h2>
+            <button class="modal-close" onclick="closeAddCardDefModal()">✕</button>
+        </div>
+        <form onsubmit="saveCardDef(event)">
+            <div class="form-group">
+                <label class="form-label">Kart Adı / Banka</label>
+                <input type="text" id="cardDefNameInput" class="form-control" placeholder="Örn: Garanti Bonus, Yapı Kredi World, Maximum..." required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Kart Simgesi</label>
+                    <select id="cardDefIconInput" class="form-control">
+                        <option value="💳">💳 Kredi Kartı</option>
+                        <option value="🟡">🟡 Bonus / Sarı</option>
+                        <option value="🔵">🔵 Maximum / Mavi</option>
+                        <option value="🟣">🟣 World / Mor</option>
+                        <option value="🔴">🔴 Axess / Kırmızı</option>
+                        <option value="🟢">🟢 Paraf / Yeşil</option>
+                        <option value="🏦">🏦 Banka Kartı</option>
+                        <option value="💎">💎 Platinum / Metal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Hesap Kesim Günü</label>
+                    <input type="number" min="1" max="31" id="cardDefCutoffDayInput" class="form-control" placeholder="Örn: 10" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Son Ödeme Günü (Ayın Kaçı?)</label>
+                <input type="number" min="1" max="31" id="cardDefDueDayInput" class="form-control" placeholder="Örn: 20" required>
+            </div>
+            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">
+                💡 Hesap kesim ve son ödeme günleri kayıtlı kalır. Her ay ekstre kesildiğinde sadece SMS veya banka uygulamanızdaki güncel borç tutarını yazıp eklersiniz.
+            </p>
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:11px;">
+                Kredi Kartını Kaydet
+            </button>
+        </form>
+    </div>
+</div>
+
 <!-- YENİ PROFİL MODALI (İZOLASYON) -->
 <div class="modal-backdrop" id="profileModalBackdrop">
     <div class="modal">
@@ -1653,6 +1817,9 @@
                         { id: 'b_2', name: 'Doğalgaz Faturası', icon: '🔥', dueDay: 22 },
                         { id: 'b_3', name: 'Su Faturası', icon: '💧', dueDay: 10 },
                         { id: 'b_4', name: 'Ev İnterneti', icon: '🌐', dueDay: 18 }
+                    ],
+                    cards: [
+                        { id: 'c_1', name: 'Bonus Kart', icon: '💳', cutoffDay: 10, dueDay: 20 }
                     ]
                 }
             }
@@ -1688,13 +1855,13 @@
 
     function getActiveItems() {
         const pid = store.activeProfileId || 'profile_default';
-        if (!store.data[pid]) store.data[pid] = { items: [], bills: [] };
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [] };
         return store.data[pid].items;
     }
 
     function getActiveBills() {
         const pid = store.activeProfileId || 'profile_default';
-        if (!store.data[pid]) store.data[pid] = { items: [], bills: [] };
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [] };
         if (!store.data[pid].bills) {
             store.data[pid].bills = [
                 { id: 'b_1', name: 'Elektrik Faturası', icon: '⚡', dueDay: 15 },
@@ -1704,6 +1871,17 @@
             ];
         }
         return store.data[pid].bills;
+    }
+
+    function getActiveCards() {
+        const pid = store.activeProfileId || 'profile_default';
+        if (!store.data[pid]) store.data[pid] = { items: [], bills: [], cards: [] };
+        if (!store.data[pid].cards) {
+            store.data[pid].cards = [
+                { id: 'c_1', name: 'Bonus Kart', icon: '💳', cutoffDay: 10, dueDay: 20 }
+            ];
+        }
+        return store.data[pid].cards;
     }
 
     function showToast(msg) {
@@ -1772,7 +1950,7 @@
                 backBar.style.display = 'flex';
                 const titles = {
                     income: '📥 Gelirler Detayı',
-                    expense: '📤 Giderler & Düzenli Faturalar',
+                    expense: '📤 Giderler, Kredi Kartları & Faturalar',
                     pending: '⏳ Kalan Borçlar & Radar',
                     net: '🏦 Net Bakiye Özeti'
                 };
@@ -1828,6 +2006,9 @@
                 { id: 'b_2', name: 'Doğalgaz Faturası', icon: '🔥', dueDay: 22 },
                 { id: 'b_3', name: 'Su Faturası', icon: '💧', dueDay: 10 },
                 { id: 'b_4', name: 'Ev İnterneti', icon: '🌐', dueDay: 18 }
+            ],
+            cards: [
+                { id: 'c_1', name: 'Bonus Kart', icon: '💳', cutoffDay: 10, dueDay: 20 }
             ]
         };
         store.activeProfileId = newId;
@@ -1999,6 +2180,185 @@
         if (badge) badge.textContent = `${enteredCount}/${bills.length} İşlendi`;
     }
 
+    // 💳 KREDİ KARTI ŞABLONLARI & EKSTRE YÖNETİMİ
+    function openAddCardDefModal() {
+        document.getElementById('cardDefModalBackdrop').classList.add('active');
+        setTimeout(() => document.getElementById('cardDefNameInput').focus(), 50);
+    }
+
+    function closeAddCardDefModal() {
+        document.getElementById('cardDefModalBackdrop').classList.remove('active');
+        document.getElementById('cardDefNameInput').value = '';
+        document.getElementById('cardDefCutoffDayInput').value = '';
+        document.getElementById('cardDefDueDayInput').value = '';
+    }
+
+    function saveCardDef(e) {
+        e.preventDefault();
+        const name = document.getElementById('cardDefNameInput').value.trim();
+        const icon = document.getElementById('cardDefIconInput').value;
+        const cutoffDay = parseInt(document.getElementById('cardDefCutoffDayInput').value);
+        const dueDay = parseInt(document.getElementById('cardDefDueDayInput').value);
+
+        if (!name || isNaN(cutoffDay) || cutoffDay < 1 || cutoffDay > 31 || isNaN(dueDay) || dueDay < 1 || dueDay > 31) return;
+
+        const cards = getActiveCards();
+        cards.push({
+            id: 'c_' + Date.now(),
+            name,
+            icon,
+            cutoffDay,
+            dueDay
+        });
+
+        saveStore();
+        closeAddCardDefModal();
+        showToast(`✔ "${name}" Kredi Kartı Eklendi`);
+    }
+
+    function deleteCardDef(cardId) {
+        if (!confirm("Bu kredi kartı şablonunu silmek istiyor musunuz? (Geçmiş aylardaki harcama ve ekstre kayıtlarınız silinmez)")) return;
+        const pid = store.activeProfileId || 'profile_default';
+        store.data[pid].cards = (store.data[pid].cards || []).filter(c => c.id !== cardId);
+        saveStore();
+        showToast("✔ Kredi kartı şablonu silindi");
+    }
+
+    function submitCardAmount(cardId) {
+        const inputEl = document.getElementById(`card-input-${cardId}`);
+        if (!inputEl) return;
+        const val = parseFloat(inputEl.value);
+        if (!val || val <= 0) {
+            alert("Lütfen geçerli bir ekstre borcu tutarı girin.");
+            return;
+        }
+
+        const cards = getActiveCards();
+        const card = cards.find(c => c.id === cardId);
+        if (!card) return;
+
+        const pid = store.activeProfileId || 'profile_default';
+        const ym = getMonthKey(currentYear, currentMonth);
+
+        store.data[pid].items.push({
+            id: Date.now().toString(),
+            ym,
+            type: 'expense',
+            category: 'card',
+            title: `${card.name} (Ekstre)`,
+            amount: val,
+            dueDay: card.dueDay,
+            cutoffDay: card.cutoffDay,
+            paid: false,
+            cardDefId: card.id,
+            recurring: false
+        });
+
+        saveStore();
+        showToast(`✔ ${card.name} Ekstresi (${formatTL(val)}) bu aya eklendi!`);
+    }
+
+    function getCutoffStatus(cutoffDay) {
+        const now = new Date();
+        const todayDay = now.getDate();
+        const isCurrentMonth = (now.getFullYear() === currentYear && now.getMonth() === currentMonth);
+
+        if (!isCurrentMonth) {
+            return { text: `Ayın ${cutoffDay}'i Kesim`, cls: 'badge-purple' };
+        }
+
+        const diff = cutoffDay - todayDay;
+        if (diff < 0) {
+            return { text: `📝 Ekstre Kesildi (${Math.abs(diff)} gün önce)`, cls: 'badge-warning', isCutoffPassed: true };
+        } else if (diff === 0) {
+            return { text: `🔔 BUGÜN EKSTRE GÜNÜ!`, cls: 'badge-danger', isCutoffPassed: true };
+        } else if (diff <= 3) {
+            return { text: `⏳ Ekstreye ${diff} gün kaldı`, cls: 'badge-warning', isCutoffPassed: false };
+        } else {
+            return { text: `📅 Ekstreye ${diff} gün var`, cls: 'badge-purple', isCutoffPassed: false };
+        }
+    }
+
+    function renderCards(monthItems) {
+        const cards = getActiveCards();
+        const container = document.getElementById('cardsListContainer');
+        if (!container) return;
+        container.innerHTML = '';
+
+        let enteredCount = 0;
+
+        if (cards.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state" style="grid-column: 1/-1; padding: 14px;">
+                    Henüz tanımlı kredi kartı bulunmuyor. "+ Yeni Kart Tanımla" butonuna basarak ekstre kesim ve son ödeme günleriyle kartınızı ekleyebilirsiniz.
+                </div>
+            `;
+            const badge = document.getElementById('cardsStatusBadge');
+            if (badge) badge.textContent = `0/0 İşlendi`;
+            return;
+        }
+
+        cards.forEach(c => {
+            const existingItem = monthItems.find(x => (x.cardDefId === c.id) || (x.category === 'card' && x.title === `${c.name} (Ekstre)`));
+
+            const cardEl = document.createElement('div');
+            cardEl.className = `credit-card-box ${existingItem ? 'entered' : 'waiting'}`;
+
+            if (existingItem) {
+                enteredCount++;
+                const st = getDueStatus(c.dueDay, existingItem.paid);
+                cardEl.innerHTML = `
+                    <div class="card-top">
+                        <div class="card-info">
+                            <div class="card-icon">${c.icon || '💳'}</div>
+                            <div>
+                                <div class="card-text-name">${c.name}</div>
+                                <div class="card-text-due">Kesim: Ayın ${c.cutoffDay}'i • Son Ödeme: Ayın ${c.dueDay}'i • <span class="badge ${st.cls}">${st.text}</span></div>
+                            </div>
+                        </div>
+                        <button class="del-btn" onclick="deleteItem('${existingItem.id}')" title="Bu Ayki Ekstre Kaydını Sil">🗑</button>
+                    </div>
+                    <div class="card-action-box">
+                        <div>
+                            <span style="font-size:11px; color:var(--text-secondary);">Bu Ayki Ekstre Borcu:</span>
+                            <div class="num" style="font-size:15px; font-weight:800; color:var(--text-primary);">${formatTL(existingItem.amount)}</div>
+                        </div>
+                        <button class="check-btn ${existingItem.paid ? 'checked' : ''}" onclick="togglePaid('${existingItem.id}')" title="Ödendi İşaretle">
+                            ${existingItem.paid ? '✓' : ''}
+                        </button>
+                    </div>
+                `;
+            } else {
+                const cutoffSt = getCutoffStatus(c.cutoffDay);
+                cardEl.innerHTML = `
+                    <div class="card-top">
+                        <div class="card-info">
+                            <div class="card-icon">${c.icon || '💳'}</div>
+                            <div>
+                                <div class="card-text-name">${c.name}</div>
+                                <div class="card-text-due">Kesim: Ayın ${c.cutoffDay}'i • Son Gün: Ayın ${c.dueDay}'i • <span class="badge ${cutoffSt.cls}">${cutoffSt.text}</span></div>
+                            </div>
+                        </div>
+                        <button class="del-btn" onclick="deleteCardDef('${c.id}')" title="Kart Şablonunu Sil">✕</button>
+                    </div>
+                    <div class="card-action-box">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <input type="number" step="0.01" id="card-input-${c.id}" class="bill-input-field" placeholder="0.00 ₺">
+                        </div>
+                        <button class="btn btn-primary" style="padding:5px 10px; font-size:11px;" onclick="submitCardAmount('${c.id}')">
+                            + Ekstre Ekle
+                        </button>
+                    </div>
+                `;
+            }
+
+            container.appendChild(cardEl);
+        });
+
+        const badge = document.getElementById('cardsStatusBadge');
+        if (badge) badge.textContent = `${enteredCount}/${cards.length} İşlendi`;
+    }
+
     // VADE VE GÜN HESAPLAMA
     function getDueStatus(dueDay, paid) {
         if (paid) return { text: '✔ Ödendi', cls: 'badge-success', diff: 999 };
@@ -2059,6 +2419,7 @@
         netEl.style.color = net >= 0 ? 'var(--accent)' : 'var(--danger)';
 
         renderBills(monthItems);
+        renderCards(monthItems);
         renderUpcoming(monthItems);
         renderAllDrawers(monthItems, income, expense, pending, net);
     }
@@ -2070,6 +2431,11 @@
         let badges = '';
         if (item.category === 'bill') {
             badges += `<span class="badge badge-purple">Fatura</span>`;
+        }
+        if (item.cardDefId) {
+            badges += `<span class="badge badge-purple">Ekstre</span>`;
+        } else if (item.category === 'card') {
+            badges += `<span class="badge badge-info">Kart</span>`;
         }
         if (item.instText) {
             badges += `<span class="badge badge-purple">${item.instText}</span>`;
@@ -2165,7 +2531,7 @@
 
             cardEl.classList.toggle('active-drawer', isOpen);
             drawerEl.classList.toggle('open', isOpen);
-            if (arrowEl) arrowEl.textContent = isOpen ? '▲ Kapat' : (type === 'expense' ? '▼ Detaylar & Faturalar' : '▼ Detaylar');
+            if (arrowEl) arrowEl.textContent = isOpen ? '▲ Kapat' : (type === 'expense' ? '▼ Detaylar & Kart/Fatura' : '▼ Detaylar');
 
             if (!isOpen) return;
 
@@ -2177,11 +2543,11 @@
                 items.forEach(i => bodyEl.appendChild(createRow(i)));
             } else if (type === 'expense') {
                 bodyEl.innerHTML = '';
-                const nonBillExpenses = monthItems.filter(x => x.type === 'expense' && x.category !== 'bill');
-                if (!nonBillExpenses.length) {
-                    bodyEl.innerHTML = '<div class="empty-state">Henüz fatura dışı gider kaydı bulunmuyor.</div>';
+                const generalExpenses = monthItems.filter(x => x.type === 'expense' && x.category !== 'bill' && !x.cardDefId);
+                if (!generalExpenses.length) {
+                    bodyEl.innerHTML = '<div class="empty-state">Henüz ek harcama veya gider kaydı bulunmuyor.</div>';
                 } else {
-                    nonBillExpenses.forEach(i => bodyEl.appendChild(createRow(i)));
+                    generalExpenses.forEach(i => bodyEl.appendChild(createRow(i)));
                 }
             } else if (type === 'pending') {
                 bodyEl.innerHTML = '';
@@ -2474,6 +2840,7 @@
             closeModal();
             closeProfileModal();
             closeAddBillDefModal();
+            closeAddCardDefModal();
             closeBackupModal();
             document.getElementById('profileDropdown').classList.remove('show');
             openDrawers = { income: false, expense: false, pending: false, net: false };
