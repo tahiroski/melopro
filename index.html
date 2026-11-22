@@ -133,19 +133,34 @@
         /* HEADER */
         .header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
             gap: 12px;
             margin-bottom: 20px;
             padding: 4px 0 16px;
             border-bottom: 1px solid var(--border);
         }
 
-        .header-left {
+        .header-top-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .header-date-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-date-box .actions {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
         }
 
         /* PROFILE DROPDOWN (İZOLASYON MOTORU) */
@@ -1629,8 +1644,14 @@
                 margin-bottom: 16px;
                 padding-bottom: 14px;
             }
-            .header-left {
-                gap: 8px;
+            .header-top-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .header-date-box {
+                width: 100%;
+                align-items: center;
             }
             .profile-btn {
                 padding: 7px 12px;
@@ -1684,7 +1705,7 @@
 <div class="container" id="mainContainer">
     <!-- HEADER (SADECE ÖZET BÖLÜMÜNDE GÖRÜNÜR) -->
     <header class="header" id="appHeader">
-        <div class="header-left">
+        <div class="header-top-row">
             <!-- ÇOKLU PROFİL & İZOLASYON SEÇİCİSİ -->
             <div class="profile-selector">
                 <button class="profile-btn" id="profileSelectorBtn" onclick="toggleProfileDropdown()">
@@ -1701,28 +1722,31 @@
                 </div>
             </div>
 
-            <!-- TARİH SEÇİCİ (MELOPRO YERİNE, SADECE ÖZET BÖLÜMÜNDE GÖRÜNÜR) -->
-            <div class="month-nav" id="headerMonthNav">
-                <button class="month-btn" onclick="changeMonth(-1)" title="Önceki Ay">◀</button>
-                <div class="current-month-label" id="monthLabel">Kasım 2026</div>
-                <button class="month-btn" onclick="changeMonth(1)" title="Sonraki Ay">▶</button>
-                <button class="today-btn" onclick="goToCurrentMonth()" title="Bugünkü Aya Git">Bugün</button>
-            </div>
-        </div>
+            <!-- TARİH SEÇİCİ VE ALTINDA YATAY İKONLAR -->
+            <div class="header-date-box">
+                <div class="month-nav" id="headerMonthNav">
+                    <button class="month-btn" onclick="changeMonth(-1)" title="Önceki Ay">◀</button>
+                    <div class="current-month-label" id="monthLabel">Kasım 2026</div>
+                    <button class="month-btn" onclick="changeMonth(1)" title="Sonraki Ay">▶</button>
+                    <button class="today-btn" onclick="goToCurrentMonth()" title="Bugünkü Aya Git">Bugün</button>
+                </div>
 
-        <div class="actions">
-            <button class="btn" onclick="copyRecurring()" title="Sabitleri Aktar">
-                <span>↻</span>
-            </button>
-            <button class="btn" onclick="openBackupModal()" title="Yedek / Aktar">
-                <span>💾</span>
-            </button>
-            <button class="btn btn-key" onclick="openVaultModal()" title="Şifrelerim">
-                <span>🔑</span>
-            </button>
-            <button class="btn" onclick="toggleTheme()" id="themeBtn" title="Koyu / Açık Tema">
-                <span>🌙</span>
-            </button>
+                <!-- SAĞDAKİ İKONLAR TARİHİN ALTINA YATAY BİR SATIR -->
+                <div class="actions">
+                    <button class="btn" onclick="copyRecurring()" title="Sabitleri Aktar">
+                        <span>↻</span>
+                    </button>
+                    <button class="btn" onclick="openBackupModal()" title="Yedek / Aktar">
+                        <span>💾</span>
+                    </button>
+                    <button class="btn btn-key" onclick="openVaultModal()" title="Şifrelerim">
+                        <span>🔑</span>
+                    </button>
+                    <button class="btn" onclick="toggleTheme()" id="themeBtn" title="Koyu / Açık Tema">
+                        <span>🌙</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
