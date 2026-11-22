@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#0b0f19">
+    <meta name="theme-color" content="#090d16" id="metaThemeColor">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MeloPro">
@@ -70,8 +70,11 @@
             background-color: var(--bg-main);
             color: var(--text-primary);
             min-height: 100vh;
-            padding: 20px;
-            padding-bottom: 96px;
+            min-height: -webkit-fill-available;
+            padding-top: max(calc(env(safe-area-inset-top) + 14px), 20px);
+            padding-bottom: max(calc(env(safe-area-inset-bottom) + 85px), 96px);
+            padding-left: max(env(safe-area-inset-left), 20px);
+            padding-right: max(env(safe-area-inset-right), 20px);
             transition: background-color 0.2s, color 0.2s;
             line-height: 1.5;
             user-select: none;
@@ -1163,7 +1166,7 @@
             align-items: center;
             justify-content: center;
             z-index: 100;
-            padding: 16px;
+            padding: max(calc(env(safe-area-inset-top) + 16px), 20px) max(env(safe-area-inset-right), 16px) max(calc(env(safe-area-inset-bottom) + 16px), 20px) max(env(safe-area-inset-left), 16px);
         }
 
         .modal-backdrop.active {
@@ -1637,7 +1640,10 @@
 
         @media (max-width: 768px) {
             body {
-                padding: 12px 14px 92px;
+                padding-top: max(calc(env(safe-area-inset-top) + 14px), 20px);
+                padding-bottom: max(calc(env(safe-area-inset-bottom) + 85px), 92px);
+                padding-left: max(env(safe-area-inset-left), 14px);
+                padding-right: max(env(safe-area-inset-right), 14px);
             }
             .header {
                 gap: 10px;
@@ -1697,6 +1703,28 @@
                 font-size: 12px;
                 padding: 9px 4px;
             }
+        }
+
+        /* 📱 STANDALONE / PWA ANA EKRAN UYGULAMA MODU GÜVENLİ ALAN KORUMASI */
+        @media all and (display-mode: standalone) {
+            body {
+                /* iPhone Çentik / Dynamic Island ve Android durum çubuğu altına garantili güvenli mesafe */
+                padding-top: max(calc(env(safe-area-inset-top) + 18px), 52px) !important;
+            }
+            .app-view:not(#view-summary) {
+                padding-top: 10px;
+            }
+        }
+
+        /* iOS Safari WebClip Standalone Koruması */
+        .standalone-mode body,
+        html.standalone-mode body {
+            padding-top: max(calc(env(safe-area-inset-top) + 18px), 52px) !important;
+        }
+
+        .standalone-mode .app-view:not(#view-summary),
+        html.standalone-mode .app-view:not(#view-summary) {
+            padding-top: 10px;
         }
     </style>
 </head>
@@ -2347,11 +2375,31 @@
         saveStore(false);
     }
 
+    // 📱 PWA STANDALONE (ANA EKRANA EKLE) MODU TESPİTİ
+    function detectStandaloneMode() {
+        const isStandalone = (window.navigator.standalone === true) || 
+                             window.matchMedia('(display-mode: standalone)').matches ||
+                             document.referrer.includes('android-app://');
+        if (isStandalone) {
+            document.documentElement.classList.add('standalone-mode');
+        }
+    }
+    detectStandaloneMode();
+    try {
+        window.matchMedia('(display-mode: standalone)').addEventListener('change', detectStandaloneMode);
+    } catch (e) {}
+
     // TEMA AYARI
+    function updateThemeMetaColor(isLight) {
+        const metaTheme = document.getElementById('metaThemeColor') || document.querySelector('meta[name="theme-color"]');
+        if (metaTheme) metaTheme.setAttribute('content', isLight ? '#f8fafc' : '#090d16');
+    }
+
     if (store.theme === 'light') {
         document.documentElement.classList.add('light');
         document.documentElement.classList.remove('dark');
         document.getElementById('themeBtn').innerHTML = '<span>☀️</span>';
+        updateThemeMetaColor(true);
     }
 
     function toggleTheme() {
@@ -2359,6 +2407,7 @@
         document.documentElement.classList.toggle('dark', !isLight);
         store.theme = isLight ? 'light' : 'dark';
         document.getElementById('themeBtn').innerHTML = isLight ? '<span>☀️</span>' : '<span>🌙</span>';
+        updateThemeMetaColor(isLight);
         saveStore(false);
     }
 
