@@ -135,16 +135,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 4px 0 16px;
             border-bottom: 1px solid var(--border);
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -158,14 +158,15 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            padding: 6px 11px;
-            border-radius: 9px;
-            font-size: 12px;
+            padding: 8px 14px;
+            border-radius: 11px;
+            font-size: 13px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 7px;
+            min-height: 40px;
             transition: all 0.15s ease;
         }
 
@@ -245,18 +246,19 @@
             align-items: center;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 3px;
-            gap: 4px;
+            border-radius: 11px;
+            padding: 4px 6px;
+            gap: 6px;
+            min-height: 40px;
         }
 
         .month-btn {
             background: transparent;
             border: none;
             color: var(--text-primary);
-            width: 30px;
-            height: 30px;
-            border-radius: 7px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 13px;
             display: flex;
@@ -270,25 +272,26 @@
         }
 
         .current-month-label {
-            font-weight: 700;
-            font-size: 13px;
-            min-width: 120px;
+            font-weight: 800;
+            font-size: 14px;
+            min-width: 125px;
             text-align: center;
         }
 
         .today-btn {
-            background: transparent;
+            background: var(--accent-bg);
             border: none;
             color: var(--accent);
             font-size: 11px;
             font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 5px 10px;
+            border-radius: 7px;
             cursor: pointer;
         }
 
         .today-btn:hover {
-            background: var(--accent-bg);
+            background: var(--accent);
+            color: #fff;
         }
 
         /* ACTIONS */
@@ -297,6 +300,15 @@
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
+        }
+
+        .actions .btn {
+            padding: 8px 12px;
+            border-radius: 11px;
+            font-size: 16px;
+            min-height: 40px;
+            min-width: 40px;
+            justify-content: center;
         }
 
         .btn {
@@ -1381,31 +1393,35 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 📊 ÖZET: 4 ANA MENÜ (1 - 1 - 1 - 1 ALT ALTA, KOMPAKT TEK EKRAN) */
+        /* 📊 ÖZET: 4 ANA MENÜ (1 - 1 - 1 - 1 ALT ALTA, FERAH VE DÜZENLİ) */
         .summary-hero-grid {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-top: 6px;
+            gap: 16px;
+            margin-top: 10px;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .summary-hero-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 14px 18px;
+            border-radius: 18px;
+            padding: 22px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
-            transition: all 0.15s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
             user-select: none;
         }
 
         .summary-hero-card:hover {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
             border-color: var(--accent);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
         }
 
         .summary-hero-card:active {
@@ -1415,16 +1431,25 @@
         .hero-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
         }
 
         .hero-icon {
-            font-size: 22px;
+            font-size: 26px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-input);
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
             line-height: 1;
         }
 
         .hero-label {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 800;
             color: var(--text-primary);
         }
@@ -1432,25 +1457,43 @@
         .hero-right {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
         }
 
         .hero-value {
-            font-size: 19px;
+            font-size: 24px;
             font-weight: 900;
             letter-spacing: -0.01em;
         }
 
         @media (min-width: 600px) {
+            .summary-hero-card {
+                padding: 24px 28px;
+                border-radius: 20px;
+            }
             .hero-value {
-                font-size: 24px;
+                font-size: 28px;
+            }
+            .hero-label {
+                font-size: 19px;
+            }
+            .hero-icon {
+                font-size: 28px;
+                width: 52px;
+                height: 52px;
             }
         }
 
         .hero-arrow {
-            font-size: 13px;
+            font-size: 16px;
             color: var(--text-muted);
             opacity: 0.6;
+            transition: transform 0.15s ease;
+        }
+
+        .summary-hero-card:hover .hero-arrow {
+            opacity: 1;
+            transform: translateX(4px);
         }
 
         .hero-income .hero-value { color: var(--success); }
@@ -1579,40 +1622,59 @@
 
         @media (max-width: 768px) {
             body {
-                padding: 10px 10px 85px;
+                padding: 12px 14px 92px;
             }
             .header {
-                gap: 8px;
-                margin-bottom: 8px;
-                padding-bottom: 8px;
+                gap: 10px;
+                margin-bottom: 16px;
+                padding-bottom: 14px;
             }
             .header-left {
-                gap: 6px;
+                gap: 8px;
+            }
+            .profile-btn {
+                padding: 7px 12px;
+                font-size: 12px;
+                min-height: 38px;
             }
             .month-nav {
                 width: auto;
-                padding: 2px 4px;
+                padding: 3px 6px;
+                min-height: 38px;
             }
             .actions {
                 width: auto;
-                gap: 4px;
+                gap: 6px;
             }
             .actions .btn {
-                padding: 5px 8px;
-                font-size: 13px;
+                padding: 8px 10px;
+                font-size: 15px;
+                min-width: 38px;
+                min-height: 38px;
+            }
+            .summary-hero-grid {
+                gap: 14px;
+                margin-top: 8px;
             }
             .summary-hero-card {
-                padding: 11px 14px;
+                padding: 18px 20px;
+                border-radius: 16px;
             }
             .hero-value {
-                font-size: 17px;
+                font-size: 21px;
             }
             .hero-label {
-                font-size: 14px;
+                font-size: 17px;
+            }
+            .hero-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 24px;
+                border-radius: 12px;
             }
             .exp-tab-btn {
-                font-size: 11px;
-                padding: 8px 2px;
+                font-size: 12px;
+                padding: 9px 4px;
             }
         }
     </style>
@@ -1620,8 +1682,8 @@
 <body>
 
 <div class="container" id="mainContainer">
-    <!-- HEADER (MELOPRO YAZISI KALKTI, TARİH SOLA GELDİ) -->
-    <header class="header">
+    <!-- HEADER (SADECE ÖZET BÖLÜMÜNDE GÖRÜNÜR) -->
+    <header class="header" id="appHeader">
         <div class="header-left">
             <!-- ÇOKLU PROFİL & İZOLASYON SEÇİCİSİ -->
             <div class="profile-selector">
@@ -1757,9 +1819,6 @@
                     + Yeni Kart Tanımla
                 </button>
             </div>
-            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">
-                💡 Ekstre kesildiğinde borcu yazıp ekleyin. Borç miktarı üzerine tıklayarak istediğiniz zaman güncelleyebilirsiniz.
-            </p>
             <div class="cards-grid" id="cardsListContainer"></div>
         </div>
 
@@ -1774,9 +1833,6 @@
                     + Yeni Fatura Tanımla
                 </button>
             </div>
-            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">
-                💡 Faturanız geldikçe bu ayki tutarını yazıp ekleyin.
-            </p>
             <div class="bills-grid" id="billsListContainer"></div>
         </div>
 
@@ -1941,10 +1997,7 @@
                     <input type="number" min="1" max="31" id="billDefDueDayInput" class="form-control" placeholder="Örn: 15" required>
                 </div>
             </div>
-            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">
-                💡 Bu fatura Gider bölümünüzde her ay otomatik hazır bekler. Faturanız geldiğinde sadece o ayki tutarını yazıp bütçenize eklersiniz.
-            </p>
-            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:11px;">
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:11px; margin-top:6px;">
                 Fatura Şablonunu Kaydet
             </button>
         </form>
@@ -1986,10 +2039,7 @@
                 <label class="form-label">Son Ödeme Günü (Ayın Kaçı?)</label>
                 <input type="number" min="1" max="31" id="cardDefDueDayInput" class="form-control" placeholder="Örn: 20" required>
             </div>
-            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">
-                💡 Hesap kesim ve son ödeme günleri kayıtlı kalır. Her ay ekstre kesildiğinde sadece SMS veya banka uygulamanızdaki güncel borç tutarını yazıp eklersiniz.
-            </p>
-            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:11px;">
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:11px; margin-top:6px;">
                 Kredi Kartını Kaydet
             </button>
         </form>
@@ -2375,10 +2425,10 @@
         const navBtn = document.getElementById(`nav-${tab}`);
         if (navBtn) navBtn.classList.add('active');
 
-        // Tarih seçici SADECE Özet (all) bölümünde gösterilir
-        const monthNav = document.getElementById('headerMonthNav');
-        if (monthNav) {
-            monthNav.style.display = (tab === 'all') ? 'flex' : 'none';
+        // Üst Header (Profil, Tarih, Butonlar) SADECE Özet (all) bölümünde gösterilir
+        const appHeader = document.getElementById('appHeader');
+        if (appHeader) {
+            appHeader.style.display = (tab === 'all') ? 'flex' : 'none';
         }
 
         render();
@@ -2768,7 +2818,7 @@
                     </div>
                     <div class="card-action-box">
                         <div class="card-debt-clickable" onclick="editCardAmount('${existingItem.id}', ${existingItem.amount})" title="Borç tutarını değiştirmek için tıklayın">
-                            <span style="font-size:11px; color:var(--text-secondary);">Bu Ayki Ekstre Borcu (Değiştirmek için tıkla):</span>
+                            <span style="font-size:11px; color:var(--text-secondary);">Bu Ayki Ekstre Borcu:</span>
                             <div class="num" style="font-size:16px; font-weight:800; color:var(--text-primary);">${formatTL(existingItem.amount)} ✏️</div>
                         </div>
                         <button class="check-btn ${existingItem.paid ? 'checked' : ''}" onclick="togglePaid('${existingItem.id}')" title="Ödendi İşaretle">
@@ -3476,7 +3526,7 @@
         });
     }
 
-    render();
+    setFocusMode('all');
 </script>
 </body>
 </html>
