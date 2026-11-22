@@ -133,55 +133,19 @@
         /* HEADER */
         .header {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 18px;
-            padding-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
             border-bottom: 1px solid var(--border);
         }
 
-        .brand-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--accent), var(--purple));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
-            flex-shrink: 0;
-        }
-
-        .brand-logo svg {
-            width: 24px;
-            height: 24px;
-            fill: none;
-            stroke: #fff;
-            stroke-width: 2.2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .brand-text h1 {
-            font-size: 19px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
+        .header-left {
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .brand-text p {
-            font-size: 11px;
-            color: var(--text-secondary);
+            flex-wrap: wrap;
         }
 
         /* PROFILE DROPDOWN (İZOLASYON MOTORU) */
@@ -1417,82 +1381,76 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 📊 ÖZET: 4 ANA MENÜ (TÜM SAYFAYI KAPLAYAN BÜYÜK KARTLAR) */
+        /* 📊 ÖZET: 4 ANA MENÜ (1 - 1 - 1 - 1 ALT ALTA, KOMPAKT TEK EKRAN) */
         .summary-hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-top: 10px;
-        }
-
-        @media (min-width: 768px) {
-            .summary-hero-grid {
-                gap: 20px;
-            }
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 6px;
         }
 
         .summary-hero-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 22px 18px;
+            border-radius: 14px;
+            padding: 14px 18px;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: space-between;
-            min-height: 140px;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: var(--shadow);
+            transition: all 0.15s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             user-select: none;
         }
 
         .summary-hero-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             border-color: var(--accent);
         }
 
         .summary-hero-card:active {
-            transform: scale(0.98);
+            transform: scale(0.99);
         }
 
-        .hero-top {
+        .hero-left {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            gap: 10px;
+        }
+
+        .hero-icon {
+            font-size: 22px;
+            line-height: 1;
         }
 
         .hero-label {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 800;
-            color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        .hero-right {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
+        }
+
+        .hero-value {
+            font-size: 19px;
+            font-weight: 900;
+            letter-spacing: -0.01em;
+        }
+
+        @media (min-width: 600px) {
+            .hero-value {
+                font-size: 24px;
+            }
         }
 
         .hero-arrow {
             font-size: 13px;
             color: var(--text-muted);
-            opacity: 0.7;
-        }
-
-        .hero-value {
-            font-size: 26px;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-            margin: 6px 0;
-        }
-
-        @media (min-width: 600px) {
-            .hero-value {
-                font-size: 32px;
-            }
-        }
-
-        .hero-hint {
-            font-size: 11px;
-            color: var(--text-muted);
+            opacity: 0.6;
         }
 
         .hero-income .hero-value { color: var(--success); }
@@ -1621,20 +1579,36 @@
 
         @media (max-width: 768px) {
             body {
-                padding: 16px 14px 105px;
+                padding: 10px 10px 85px;
             }
             .header {
-                gap: 12px;
+                gap: 8px;
+                margin-bottom: 8px;
+                padding-bottom: 8px;
+            }
+            .header-left {
+                gap: 6px;
             }
             .month-nav {
-                width: 100%;
-                justify-content: space-between;
+                width: auto;
+                padding: 2px 4px;
             }
             .actions {
-                width: 100%;
-                justify-content: flex-start;
-                overflow-x: auto;
-                padding-bottom: 4px;
+                width: auto;
+                gap: 4px;
+            }
+            .actions .btn {
+                padding: 5px 8px;
+                font-size: 13px;
+            }
+            .summary-hero-card {
+                padding: 11px 14px;
+            }
+            .hero-value {
+                font-size: 17px;
+            }
+            .hero-label {
+                font-size: 14px;
             }
             .exp-tab-btn {
                 font-size: 11px;
@@ -1646,17 +1620,9 @@
 <body>
 
 <div class="container" id="mainContainer">
-    <!-- HEADER -->
+    <!-- HEADER (MELOPRO YAZISI KALKTI, TARİH SOLA GELDİ) -->
     <header class="header">
-        <div class="brand-section">
-            <div class="brand-logo">
-                <svg viewBox="0 0 24 24"><path d="M3 17V7l7 5 7-5v10"></path></svg>
-            </div>
-            <div class="brand-text">
-                <h1>MeloPro</h1>
-                <p>Ev Bütçesi & Ödeme Takip Sistemi</p>
-            </div>
-            
+        <div class="header-left">
             <!-- ÇOKLU PROFİL & İZOLASYON SEÇİCİSİ -->
             <div class="profile-selector">
                 <button class="profile-btn" id="profileSelectorBtn" onclick="toggleProfileDropdown()">
@@ -1672,24 +1638,25 @@
                     </button>
                 </div>
             </div>
-        </div>
 
-        <div class="month-nav">
-            <button class="month-btn" onclick="changeMonth(-1)" title="Önceki Ay">◀</button>
-            <div class="current-month-label" id="monthLabel">Kasım 2026</div>
-            <button class="month-btn" onclick="changeMonth(1)" title="Sonraki Ay">▶</button>
-            <button class="today-btn" onclick="goToCurrentMonth()" title="Bugünkü Aya Git">Bugün</button>
+            <!-- TARİH SEÇİCİ (MELOPRO YERİNE, SADECE ÖZET BÖLÜMÜNDE GÖRÜNÜR) -->
+            <div class="month-nav" id="headerMonthNav">
+                <button class="month-btn" onclick="changeMonth(-1)" title="Önceki Ay">◀</button>
+                <div class="current-month-label" id="monthLabel">Kasım 2026</div>
+                <button class="month-btn" onclick="changeMonth(1)" title="Sonraki Ay">▶</button>
+                <button class="today-btn" onclick="goToCurrentMonth()" title="Bugünkü Aya Git">Bugün</button>
+            </div>
         </div>
 
         <div class="actions">
-            <button class="btn" onclick="copyRecurring()" title="Önceki ayın sabit gider ve gelirlerini bu aya aktarır">
-                <span>↻</span> Sabitleri Aktar
+            <button class="btn" onclick="copyRecurring()" title="Sabitleri Aktar">
+                <span>↻</span>
             </button>
-            <button class="btn" onclick="openBackupModal()" title="Yedekleme ve Cihazlar Arası Aktarım">
-                <span>💾</span> Yedek / Aktar
+            <button class="btn" onclick="openBackupModal()" title="Yedek / Aktar">
+                <span>💾</span>
             </button>
             <button class="btn btn-key" onclick="openVaultModal()" title="Şifrelerim">
-                <span>🔑</span> Şifreler
+                <span>🔑</span>
             </button>
             <button class="btn" onclick="toggleTheme()" id="themeBtn" title="Koyu / Açık Tema">
                 <span>🌙</span>
@@ -1697,43 +1664,50 @@
         </div>
     </header>
 
-    <!-- 1. ÖZET GÖRÜNÜMÜ: SADECE 4 ANA MENÜ (TÜM SAYFAYI KAPLAYAN TOPLAMLAR) -->
+    <!-- 1. ÖZET GÖRÜNÜMÜ: 1 - 1 - 1 - 1 ALT ALTA KOMPAKT MENÜ -->
     <div id="view-summary" class="app-view active">
         <div class="summary-hero-grid">
             <div class="summary-hero-card hero-income" onclick="setFocusMode('income')" title="Gelir detayları için tıkla">
-                <div class="hero-top">
-                    <span class="hero-label">📥 Gelir</span>
-                    <span style="font-size:16px; opacity:0.7;">➜</span>
+                <div class="hero-left">
+                    <span class="hero-icon">📥</span>
+                    <span class="hero-label">Gelir</span>
                 </div>
-                <div class="hero-value num" id="kpiIncome">0,00 ₺</div>
-                <div class="hero-sub">Bu Ayki Toplam Gelir</div>
+                <div class="hero-right">
+                    <span class="hero-value num" id="kpiIncome">0,00 ₺</span>
+                    <span class="hero-arrow">➜</span>
+                </div>
             </div>
 
             <div class="summary-hero-card hero-expense" onclick="setFocusMode('expense')" title="Gider detayları için tıkla">
-                <div class="hero-top">
-                    <span class="hero-label">📤 Gider</span>
-                    <span style="font-size:16px; opacity:0.7;">➜</span>
+                <div class="hero-left">
+                    <span class="hero-icon">📤</span>
+                    <span class="hero-label">Gider</span>
                 </div>
-                <div class="hero-value num" id="kpiExpense">0,00 ₺</div>
-                <div class="hero-sub">Faturalar, Kartlar & Harcamalar</div>
+                <div class="hero-right">
+                    <span class="hero-value num" id="kpiExpense">0,00 ₺</span>
+                    <span class="hero-arrow">➜</span>
+                </div>
             </div>
 
             <div class="summary-hero-card hero-pending" onclick="setFocusMode('pending')" title="Borç detayları için tıkla">
-                <div class="hero-top">
-                    <span class="hero-label">⏳ Borç</span>
-                    <span style="font-size:16px; opacity:0.7;">➜</span>
+                <div class="hero-left">
+                    <span class="hero-icon">⏳</span>
+                    <span class="hero-label">Borç</span>
                 </div>
-                <div class="hero-value num" id="kpiPending">0,00 ₺</div>
-                <div class="hero-sub">Ödenecek Kalan Borç</div>
+                <div class="hero-right">
+                    <span class="hero-value num" id="kpiPending">0,00 ₺</span>
+                    <span class="hero-arrow">➜</span>
+                </div>
             </div>
 
             <div class="summary-hero-card hero-net" title="Aylık Net Bakiye">
-                <div class="hero-top">
-                    <span class="hero-label">🏦 Kalan</span>
-                    <span class="badge badge-purple">Bakiye</span>
+                <div class="hero-left">
+                    <span class="hero-icon">🏦</span>
+                    <span class="hero-label">Kalan</span>
                 </div>
-                <div class="hero-value num" id="kpiNet">0,00 ₺</div>
-                <div class="hero-sub">Gelir - Gider Net Durum</div>
+                <div class="hero-right">
+                    <span class="hero-value num" id="kpiNet">0,00 ₺</span>
+                </div>
             </div>
         </div>
     </div>
@@ -2400,6 +2374,12 @@
 
         const navBtn = document.getElementById(`nav-${tab}`);
         if (navBtn) navBtn.classList.add('active');
+
+        // Tarih seçici SADECE Özet (all) bölümünde gösterilir
+        const monthNav = document.getElementById('headerMonthNav');
+        if (monthNav) {
+            monthNav.style.display = (tab === 'all') ? 'flex' : 'none';
+        }
 
         render();
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3164,21 +3144,12 @@
         const div = document.createElement('div');
         div.className = `item-row ${item.paid && item.type === 'expense' ? 'paid' : ''}`;
 
-        let badges = '';
-        if (item.category === 'bill') {
-            badges += `<span class="badge badge-purple">Fatura</span>`;
-        }
-        if (item.cardDefId) {
-            badges += `<span class="badge badge-purple">Ekstre</span>`;
-        } else if (item.category === 'card') {
-            badges += `<span class="badge badge-info">Kart</span>`;
-        }
-        if (item.instText) {
-            badges += `<span class="badge badge-purple">${item.instText}</span>`;
-        }
-        if (item.recurring) {
-            badges += `<span class="badge badge-warning">Sabit</span>`;
-        }
+        // Minimal ikonlar: Fatura 🧾, Kart 💳, Sabit 🔁, Taksit (1/6)
+        let icons = '';
+        if (item.category === 'bill') icons += ' 🧾';
+        if (item.cardDefId || item.category === 'card') icons += ' 💳';
+        if (item.instText) icons += ` <span style="font-size:11px; opacity:0.75;">(${item.instText})</span>`;
+        if (item.recurring) icons += ' <span title="Sabit" style="font-size:12px;">🔁</span>';
 
         const isIncome = item.type === 'income';
         let statusHTML = '';
@@ -3188,18 +3159,16 @@
             statusHTML = `<span class="badge ${st.cls}">${st.text}</span>`;
         } else {
             if (item.dueDay) {
-                statusHTML = `<span class="badge badge-success">💵 Gelir</span> <span class="badge badge-info">📅 Ayın ${item.dueDay}'i</span>`;
-            } else {
-                statusHTML = `<span class="badge badge-success">💵 Gelir</span>`;
+                statusHTML = `<span style="font-size:11px; color:var(--text-secondary); font-weight:600;">📅 Ayın ${item.dueDay}'i</span>`;
             }
         }
 
         div.innerHTML = `
             <div class="item-left">
-                ${!isIncome ? `<button class="check-btn ${item.paid ? 'checked' : ''}" onclick="togglePaid('${item.id}')" title="Ödendi İşaretle">${item.paid ? '✓' : ''}</button>` : `<span style="font-size:18px;">💵</span>`}
+                ${!isIncome ? `<button class="check-btn ${item.paid ? 'checked' : ''}" onclick="togglePaid('${item.id}')" title="Ödendi İşaretle">${item.paid ? '✓' : ''}</button>` : `<span style="font-size:16px;">💵</span>`}
                 <div class="item-info">
-                    <div class="item-title">${item.title} ${badges}</div>
-                    <div class="item-meta">${statusHTML}</div>
+                    <div class="item-title">${item.title}${icons}</div>
+                    ${statusHTML ? `<div class="item-meta">${statusHTML}</div>` : ''}
                 </div>
             </div>
             <div class="item-right">
