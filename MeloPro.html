@@ -1331,9 +1331,9 @@
             transform: translateY(0);
         }
 
-        /* MOBILE BOTTOM NAVIGATION BAR */
+        /* 📱 BOTTOM NAVIGATION BAR (Masaüstü ve Mobil) */
         .mobile-bottom-bar {
-            display: none;
+            display: flex;
             position: fixed;
             bottom: 0;
             left: 0;
@@ -1345,6 +1345,18 @@
             justify-content: space-around;
             align-items: center;
             backdrop-filter: blur(12px);
+        }
+
+        @media (min-width: 769px) {
+            .mobile-bottom-bar {
+                max-width: 520px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 16px 16px 0 0;
+                border-left: 1px solid var(--border);
+                border-right: 1px solid var(--border);
+                box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.25);
+            }
         }
 
         .nav-item {
@@ -1390,16 +1402,226 @@
             cursor: pointer;
         }
 
-        /* MOBİL ODAKLANMA MANTIĞI */
+        /* 📄 VIEW GÖSTERİM SİSTEMİ (Özet, Gelir, Gider, Borçlar) */
+        .app-view {
+            display: none;
+            animation: viewFadeIn 0.18s ease;
+        }
+
+        .app-view.active {
+            display: block;
+        }
+
+        @keyframes viewFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 📊 ÖZET: 4 ANA MENÜ (TÜM SAYFAYI KAPLAYAN BÜYÜK KARTLAR) */
+        .summary-hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .summary-hero-grid {
+                gap: 20px;
+            }
+        }
+
+        .summary-hero-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 140px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--shadow);
+            user-select: none;
+        }
+
+        .summary-hero-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        .summary-hero-card:active {
+            transform: scale(0.98);
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .hero-label {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-arrow {
+            font-size: 13px;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        .hero-value {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin: 6px 0;
+        }
+
+        @media (min-width: 600px) {
+            .hero-value {
+                font-size: 32px;
+            }
+        }
+
+        .hero-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .hero-income .hero-value { color: var(--success); }
+        .hero-expense .hero-value { color: var(--danger); }
+        .hero-pending .hero-value { color: var(--warning); }
+        .hero-net .hero-value { color: var(--accent); }
+
+        /* 📤 GİDER: 4 KISIMLI FİLTRELEME BAR (Kredim | Kartlarım | Faturalarım | Diğer) */
+        .expense-filter-tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: var(--bg-input);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            gap: 4px;
+        }
+
+        .exp-tab-btn {
+            padding: 10px 4px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 9px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .exp-tab-btn.active {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .exp-sub-section {
+            animation: viewFadeIn 0.15s ease;
+        }
+
+        .card-debt-clickable {
+            cursor: pointer;
+            text-decoration: underline dotted var(--accent);
+            transition: opacity 0.15s;
+        }
+
+        .card-debt-clickable:hover {
+            opacity: 0.8;
+        }
+
+        .view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .view-title {
+            font-size: 16px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .view-sub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .view-sub-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .clean-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* 🔑 ŞİFRE KASASI (TAM EKRAN SAYFA BOYUNCA) */
+        .modal-vault-fullscreen {
+            max-width: 740px;
+            width: 95vw;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .vault-simple-add-form {
+            background: var(--bg-input);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 14px;
+        }
+
+        .vault-simple-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 8px;
+        }
+
+        .btn-key {
+            background: rgba(251, 191, 36, 0.12);
+            border-color: rgba(251, 191, 36, 0.35);
+            color: var(--warning);
+            font-weight: 700;
+        }
+
+        .btn-key:hover {
+            background: rgba(251, 191, 36, 0.22);
+            border-color: var(--warning);
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 16px 14px 105px;
-            }
-            .mobile-bottom-bar {
-                display: flex;
-            }
-            .focus-tabs {
-                display: flex;
             }
             .header {
                 gap: 12px;
@@ -1414,47 +1636,9 @@
                 overflow-x: auto;
                 padding-bottom: 4px;
             }
-
-            /* ODAKLANMA MODLARI */
-            .mobile-focus-income #panel-expense,
-            .mobile-focus-income #panel-pending,
-            .mobile-focus-income #panel-net,
-            .mobile-focus-income #upcomingSection {
-                display: none !important;
-            }
-
-            .mobile-focus-expense #panel-income,
-            .mobile-focus-expense #panel-pending,
-            .mobile-focus-expense #panel-net,
-            .mobile-focus-expense #upcomingSection {
-                display: none !important;
-            }
-
-            .mobile-focus-pending #panel-income,
-            .mobile-focus-pending #panel-expense,
-            .mobile-focus-pending #panel-net {
-                display: none !important;
-            }
-
-            .mobile-focus-net #panel-income,
-            .mobile-focus-net #panel-expense,
-            .mobile-focus-net #panel-pending,
-            .mobile-focus-net #upcomingSection {
-                display: none !important;
-            }
-
-            .mobile-focus-income #drawer-income,
-            .mobile-focus-expense #drawer-expense,
-            .mobile-focus-pending #drawer-pending,
-            .mobile-focus-net #drawer-net {
-                display: block !important;
-            }
-
-            .mobile-focus-income #arrow-income,
-            .mobile-focus-expense #arrow-expense,
-            .mobile-focus-pending #arrow-pending,
-            .mobile-focus-net #arrow-net {
-                display: none;
+            .exp-tab-btn {
+                font-size: 11px;
+                padding: 8px 2px;
             }
         }
     </style>
@@ -1498,14 +1682,14 @@
         </div>
 
         <div class="actions">
-            <button class="btn" onclick="openVaultModal()" title="Kişisel Şifre Kasası (100% Yerel & Güvenli)" style="font-weight:700;">
-                <span>🔐</span> Şifre Kasası
-            </button>
             <button class="btn" onclick="copyRecurring()" title="Önceki ayın sabit gider ve gelirlerini bu aya aktarır">
                 <span>↻</span> Sabitleri Aktar
             </button>
             <button class="btn" onclick="openBackupModal()" title="Yedekleme ve Cihazlar Arası Aktarım">
                 <span>💾</span> Yedek / Aktar
+            </button>
+            <button class="btn btn-key" onclick="openVaultModal()" title="Şifrelerim">
+                <span>🔑</span> Şifreler
             </button>
             <button class="btn" onclick="toggleTheme()" id="themeBtn" title="Koyu / Açık Tema">
                 <span>🌙</span>
@@ -1513,172 +1697,137 @@
         </div>
     </header>
 
-    <!-- MOBİL İÇİN HIZLI ODAKLANMA SEKMELERİ (FOCUS TABS) -->
-    <div class="focus-tabs" id="mobileFocusTabs">
-        <button class="focus-tab-btn active" id="tab-all" onclick="setFocusMode('all')">📊 Tüm Özet</button>
-        <button class="focus-tab-btn tab-income" id="tab-income" onclick="setFocusMode('income')">📥 Gelir</button>
-        <button class="focus-tab-btn tab-expense" id="tab-expense" onclick="setFocusMode('expense')">📤 Gider & Faturalar</button>
-        <button class="focus-tab-btn tab-pending" id="tab-pending" onclick="setFocusMode('pending')">⏳ Borçlar</button>
+    <!-- 1. ÖZET GÖRÜNÜMÜ: SADECE 4 ANA MENÜ (TÜM SAYFAYI KAPLAYAN TOPLAMLAR) -->
+    <div id="view-summary" class="app-view active">
+        <div class="summary-hero-grid">
+            <div class="summary-hero-card hero-income" onclick="setFocusMode('income')" title="Gelir detayları için tıkla">
+                <div class="hero-top">
+                    <span class="hero-label">📥 Gelir</span>
+                    <span style="font-size:16px; opacity:0.7;">➜</span>
+                </div>
+                <div class="hero-value num" id="kpiIncome">0,00 ₺</div>
+                <div class="hero-sub">Bu Ayki Toplam Gelir</div>
+            </div>
+
+            <div class="summary-hero-card hero-expense" onclick="setFocusMode('expense')" title="Gider detayları için tıkla">
+                <div class="hero-top">
+                    <span class="hero-label">📤 Gider</span>
+                    <span style="font-size:16px; opacity:0.7;">➜</span>
+                </div>
+                <div class="hero-value num" id="kpiExpense">0,00 ₺</div>
+                <div class="hero-sub">Faturalar, Kartlar & Harcamalar</div>
+            </div>
+
+            <div class="summary-hero-card hero-pending" onclick="setFocusMode('pending')" title="Borç detayları için tıkla">
+                <div class="hero-top">
+                    <span class="hero-label">⏳ Borç</span>
+                    <span style="font-size:16px; opacity:0.7;">➜</span>
+                </div>
+                <div class="hero-value num" id="kpiPending">0,00 ₺</div>
+                <div class="hero-sub">Ödenecek Kalan Borç</div>
+            </div>
+
+            <div class="summary-hero-card hero-net" title="Aylık Net Bakiye">
+                <div class="hero-top">
+                    <span class="hero-label">🏦 Kalan</span>
+                    <span class="badge badge-purple">Bakiye</span>
+                </div>
+                <div class="hero-value num" id="kpiNet">0,00 ₺</div>
+                <div class="hero-sub">Gelir - Gider Net Durum</div>
+            </div>
+        </div>
     </div>
 
-    <!-- ODAKLANILDIĞINDA GÖRÜNEN GERİ DÖNÜŞ BARI -->
-    <div class="focus-back-bar" id="focusBackBar">
-        <button class="btn" onclick="setFocusMode('all')" style="padding:5px 10px; font-size:12px;">
-            <span>◀</span> Tüm Özete Dön
-        </button>
-        <span id="focusSectionTitle" style="font-weight:700; font-size:13px; color:var(--text-secondary);"></span>
+    <!-- 2. GELİR GÖRÜNÜMÜ -->
+    <div id="view-income" class="app-view">
+        <div class="view-header">
+            <div class="view-title">
+                <span>📥 Gelirlerim</span>
+                <span class="badge badge-success" id="incomeTotalBadge">0,00 ₺</span>
+            </div>
+            <button class="btn btn-primary" onclick="openAddModal('income')" style="background:var(--success); border-color:var(--success);">
+                + Gelir Ekle
+            </button>
+        </div>
+        <div class="clean-list-container" id="body-income"></div>
     </div>
 
-    <!-- 4 KPI SUMMARY CARDS -->
-    <section class="kpi-grid">
-        <!-- 1. GELİR KARTI -->
-        <div class="panel-container" id="panel-income">
-            <div class="kpi-card kpi-income" id="card-income" onclick="handleCardClick('income')">
-                <div>
-                    <div class="kpi-top">
-                        <span class="kpi-label">📥 Toplam Gelir</span>
-                        <button class="btn-card-add" style="background:var(--success); color:#fff;" onclick="event.stopPropagation(); openAddModal('income')">+ Ekle</button>
-                    </div>
-                    <div class="kpi-value num" id="kpiIncome" style="color:var(--success)">0,00 ₺</div>
-                </div>
-                <div class="kpi-footer">
-                    <span>Maaş ve Ek Gelirler</span>
-                    <span id="arrow-income">▼ Detaylar</span>
-                </div>
-            </div>
-            <div class="inline-drawer" id="drawer-income">
-                <div class="inline-drawer-header">
-                    <span>📥 Bu Ayki Gelirler</span>
-                    <button class="btn" style="padding:2px 8px; font-size:11px;" onclick="closeCardDrawer('income')">✕ Kapat</button>
-                </div>
-                <div class="inline-drawer-body" id="body-income"></div>
-            </div>
+    <!-- 3. GİDER GÖRÜNÜMÜ: 4 KISIMLI FİLTRELEME (Kredim | Kartlarım | Faturalarım | Diğer) -->
+    <div id="view-expense" class="app-view">
+        <div class="expense-filter-tabs">
+            <button class="exp-tab-btn active" id="exp-tab-credit" onclick="setExpenseTab('credit')">🏦 Kredim</button>
+            <button class="exp-tab-btn" id="exp-tab-cards" onclick="setExpenseTab('cards')">💳 Kartlarım</button>
+            <button class="exp-tab-btn" id="exp-tab-bills" onclick="setExpenseTab('bills')">🧾 Faturalarım</button>
+            <button class="exp-tab-btn" id="exp-tab-other" onclick="setExpenseTab('other')">📋 Diğer</button>
         </div>
 
-        <!-- 2. GİDER KARTI (İÇİNDE ENTEGRE DÜZENLİ FATURALAR VAR) -->
-        <div class="panel-container" id="panel-expense">
-            <div class="kpi-card kpi-expense" id="card-expense" onclick="handleCardClick('expense')">
-                <div>
-                    <div class="kpi-top">
-                        <span class="kpi-label">📤 Toplam Gider</span>
-                        <button class="btn-card-add" style="background:var(--danger); color:#fff;" onclick="event.stopPropagation(); openAddModal('expense', 'fixed')">+ Ekle</button>
-                    </div>
-                    <div class="kpi-value num" id="kpiExpense" style="color:var(--danger)">0,00 ₺</div>
-                </div>
-                <div class="kpi-footer">
-                    <span>Faturalar, Kartlar & Harcamalar</span>
-                    <span id="arrow-expense">▼ Detaylar & Kart/Fatura</span>
-                </div>
+        <!-- 1. Kredim -->
+        <div class="exp-sub-section" id="exp-section-credit">
+            <div class="view-sub-header">
+                <div class="view-sub-title">🏦 Kredi & Taksit Ödemeleri</div>
+                <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddModal('expense', 'card')">
+                    + Kredi / Taksit Ekle
+                </button>
             </div>
-            <div class="inline-drawer" id="drawer-expense">
-                <div class="inline-drawer-header">
-                    <span>📤 Bu Ayki Giderler, Kredi Kartları & Faturalar</span>
-                    <button class="btn" style="padding:2px 8px; font-size:11px;" onclick="closeCardDrawer('expense')">✕ Kapat</button>
-                </div>
-                <div class="inline-drawer-body">
-                    <!-- 🧾 ENTEGRE FATURALAR BLOĞU -->
-                    <div class="bills-embedded-box">
-                        <div class="bills-header">
-                            <div class="bills-title">
-                                <span>🧾 Düzenli Faturalarım</span>
-                                <span class="badge badge-purple" id="billsStatusBadge">0/0 İşlendi</span>
-                            </div>
-                            <button class="btn btn-primary" style="padding:4px 10px; font-size:11px;" onclick="openAddBillDefModal()">
-                                + Yeni Fatura Tanımla
-                            </button>
-                        </div>
-                        <p style="font-size:11px; color:var(--text-secondary); margin-bottom:8px;">
-                            Son ödeme günleri kayıtlıdır; fatura SMS'iniz geldikçe sadece bu ayki tutarını yazıp ekleyin.
-                        </p>
-                        <div class="bills-grid" id="billsListContainer"></div>
-                    </div>
-
-                    <!-- 💳 ENTEGRE KREDİ KARTLARI BLOĞU -->
-                    <div class="cards-embedded-box">
-                        <div class="cards-header">
-                            <div class="cards-title">
-                                <span>💳 Kredi Kartlarım</span>
-                                <span class="badge badge-purple" id="cardsStatusBadge">0/0 İşlendi</span>
-                            </div>
-                            <button class="btn btn-primary" style="padding:4px 10px; font-size:11px;" onclick="openAddCardDefModal()">
-                                + Yeni Kart Tanımla
-                            </button>
-                        </div>
-                        <p style="font-size:11px; color:var(--text-secondary); margin-bottom:8px;">
-                            Hesap kesim ve son ödeme günleri kayıtlıdır; ekstre kesildiğinde bu ayki güncel borç tutarını yazıp ekleyin.
-                        </p>
-                        <div class="cards-grid" id="cardsListContainer"></div>
-                    </div>
-
-                    <!-- 📋 TÜM DİĞER GİDERLER LİSTESİ -->
-                    <div style="margin-top:14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-weight:700; font-size:13px; color:var(--text-secondary);">📋 Tüm Gider & Harcama Kayıtları</span>
-                        <button class="btn-card-add" style="background:var(--danger); color:#fff; font-size:11px; padding:4px 10px;" onclick="openAddModal('expense', 'fixed')">+ Gider Ekle</button>
-                    </div>
-                    <div id="body-expense"></div>
-                </div>
-            </div>
+            <div class="clean-list-container" id="body-credit-list"></div>
         </div>
 
-        <!-- 3. KALAN BORÇ KARTI -->
-        <div class="panel-container" id="panel-pending">
-            <div class="kpi-card kpi-pending" id="card-pending" onclick="handleCardClick('pending')">
-                <div>
-                    <div class="kpi-top">
-                        <span class="kpi-label">⏳ Kalan Borç</span>
-                        <span class="badge badge-warning" id="pendingCountBadge">0 Bekleyen</span>
-                    </div>
-                    <div class="kpi-value num" id="kpiPending" style="color:var(--warning)">0,00 ₺</div>
+        <!-- 2. Kartlarım (Tıklanınca Tutar Değiştirilebilir) -->
+        <div class="exp-sub-section" id="exp-section-cards" style="display:none;">
+            <div class="view-sub-header">
+                <div class="view-sub-title">
+                    <span>💳 Kredi Kartlarım</span>
+                    <span class="badge badge-purple" id="cardsStatusBadge" style="margin-left:6px;">0/0 İşlendi</span>
                 </div>
-                <div class="kpi-footer">
-                    <span>Henüz Ödenmeyenler</span>
-                    <span id="arrow-pending">▼ Detaylar</span>
-                </div>
+                <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddCardDefModal()">
+                    + Yeni Kart Tanımla
+                </button>
             </div>
-            <div class="inline-drawer" id="drawer-pending">
-                <div class="inline-drawer-header">
-                    <span>⏳ Henüz Ödenmemiş Borçlar</span>
-                    <button class="btn" style="padding:2px 8px; font-size:11px;" onclick="closeCardDrawer('pending')">✕ Kapat</button>
-                </div>
-                <div class="inline-drawer-body" id="body-pending"></div>
-            </div>
+            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">
+                💡 Ekstre kesildiğinde borcu yazıp ekleyin. Borç miktarı üzerine tıklayarak istediğiniz zaman güncelleyebilirsiniz.
+            </p>
+            <div class="cards-grid" id="cardsListContainer"></div>
         </div>
 
-        <!-- 4. CEBE KALAN NET KARTI -->
-        <div class="panel-container" id="panel-net">
-            <div class="kpi-card kpi-net" id="card-net" onclick="handleCardClick('net')">
-                <div>
-                    <div class="kpi-top">
-                        <span class="kpi-label">🏦 Cebe Kalan Net</span>
-                        <span class="badge badge-purple">Bakiye</span>
-                    </div>
-                    <div class="kpi-value num" id="kpiNet">0,00 ₺</div>
+        <!-- 3. Faturalarım -->
+        <div class="exp-sub-section" id="exp-section-bills" style="display:none;">
+            <div class="view-sub-header">
+                <div class="view-sub-title">
+                    <span>🧾 Düzenli Faturalarım</span>
+                    <span class="badge badge-purple" id="billsStatusBadge" style="margin-left:6px;">0/0 İşlendi</span>
                 </div>
-                <div class="kpi-footer">
-                    <span>Gelir - Gider Hesabı</span>
-                    <span id="arrow-net">▼ Özeti Gör</span>
-                </div>
+                <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddBillDefModal()">
+                    + Yeni Fatura Tanımla
+                </button>
             </div>
-            <div class="inline-drawer" id="drawer-net">
-                <div class="inline-drawer-header">
-                    <span>🏦 Aylık Net Durum Özeti</span>
-                    <button class="btn" style="padding:2px 8px; font-size:11px;" onclick="closeCardDrawer('net')">✕ Kapat</button>
-                </div>
-                <div class="inline-drawer-body" id="body-net"></div>
-            </div>
+            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">
+                💡 Faturanız geldikçe bu ayki tutarını yazıp ekleyin.
+            </p>
+            <div class="bills-grid" id="billsListContainer"></div>
         </div>
-    </section>
 
-    <!-- UPCOMING RADAR SECTION -->
-    <section class="upcoming-section" id="upcomingSection">
-        <div class="upcoming-header">
-            <div class="upcoming-title">
-                <span>🔔 Ödeme Günü Yaklaşan & Geciken Borçlar</span>
+        <!-- 4. Diğer Giderler -->
+        <div class="exp-sub-section" id="exp-section-other" style="display:none;">
+            <div class="view-sub-header">
+                <div class="view-sub-title">📋 Diğer Harcamalar & Sabit Giderler</div>
+                <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddModal('expense', 'fixed')">
+                    + Gider Ekle
+                </button>
             </div>
-            <span style="font-size:12px; color:var(--text-secondary)" id="upcomingSummaryText">Vadeye göre sıralı</span>
+            <div class="clean-list-container" id="body-other-expenses"></div>
         </div>
-        <div class="upcoming-grid" id="upcomingList"></div>
-    </section>
+    </div>
+
+    <!-- 4. BORÇLAR GÖRÜNÜMÜ: SADECE ÖDENECEK OLANLAR (TARİHE GÖRE SIRALI, SADELİK) -->
+    <div id="view-pending" class="app-view">
+        <div class="view-header">
+            <div class="view-title">
+                <span>⏳ Ödenecek Borçlar</span>
+                <span class="badge badge-warning" id="pendingTotalBadge">0,00 ₺</span>
+            </div>
+        </div>
+        <div class="clean-list-container" id="body-pending-list"></div>
+    </div>
 </div>
 
 <!-- MOBILE BOTTOM NAVIGATION BAR -->
@@ -1938,119 +2087,46 @@
     </div>
 </div>
 
-<!-- 🔐 ANA ŞİFRE KASASI MODALI -->
+<!-- 🔑 ŞİFRE KASASI (TAM SAYFA AÇILIR & SADE) -->
 <div class="modal-backdrop" id="vaultModalBackdrop">
-    <div class="modal modal-vault">
+    <div class="modal modal-vault-fullscreen">
         <div class="modal-header">
             <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:22px;">🔐</span>
+                <span style="font-size:22px;">🔑</span>
                 <div>
-                    <h2 style="font-size:18px; margin:0;">Kişisel Şifre Kasası</h2>
-                    <span style="font-size:11px; color:var(--text-secondary);" id="vaultProfileSub">Benim Bütçem Profili</span>
+                    <h2 style="font-size:18px; margin:0;">Şifrelerim</h2>
+                    <span style="font-size:11px; color:var(--text-secondary);">%100 Cihazınızda Saklanır • Çevrimdışı & Güvenli</span>
                 </div>
             </div>
             <div style="display:flex; align-items:center; gap:6px;">
-                <button class="btn" style="padding:5px 9px; font-size:11px;" onclick="openSetPinModal()" id="vaultPinSettingBtn" title="PIN Koruması">
-                    🔒 PIN Ayarı
-                </button>
-                <button class="btn" style="padding:5px 9px; font-size:11px; display:none;" onclick="lockVault()" id="vaultLockNowBtn" title="Kasayı Şimdi Kilitle">
-                    🔒 Kilitle
-                </button>
                 <button class="modal-close" onclick="closeVaultModal()">✕</button>
             </div>
         </div>
 
-        <div class="vault-security-banner">
-            <span>🛡️</span>
-            <span><strong>%100 Yerel & Çevrimdışı:</strong> Şifreleriniz sadece bu cihazda saklanır; asla sunucuya veya internete gönderilmez.</span>
-        </div>
-
-        <div class="vault-controls-row">
-            <div class="vault-search-box">
-                <span class="vault-search-icon">🔍</span>
-                <input type="text" id="vaultSearchInput" placeholder="Başlık, hesap veya kullanıcı adı ara..." oninput="handleVaultSearch(this.value)">
-            </div>
-            <button class="btn btn-primary" style="padding:8px 14px; font-size:12px;" onclick="openAddPasswordModal()">
-                + Yeni Şifre Ekle
-            </button>
-            <button class="btn" style="padding:8px 12px; font-size:12px;" onclick="openPasswordGeneratorModal()">
-                🎲 Şifre Üret
-            </button>
-        </div>
-
-        <div class="vault-filter-pills" id="vaultFilterPills">
-            <button class="vault-pill active" onclick="setVaultFilter('all')">Tümü (<span id="vaultCountAll">0</span>)</button>
-            <button class="vault-pill" onclick="setVaultFilter('bank')">🏦 Banka</button>
-            <button class="vault-pill" onclick="setVaultFilter('email')">📧 E-Posta</button>
-            <button class="vault-pill" onclick="setVaultFilter('social')">🌐 Sosyal</button>
-            <button class="vault-pill" onclick="setVaultFilter('shopping')">🛒 Alışveriş</button>
-            <button class="vault-pill" onclick="setVaultFilter('work')">💼 İş</button>
-            <button class="vault-pill" onclick="setVaultFilter('other')">🔑 Diğer</button>
-        </div>
-
-        <div class="vault-grid" id="vaultItemsContainer"></div>
-    </div>
-</div>
-
-<!-- 🔐 ŞİFRE EKLE / DÜZENLE MODALI -->
-<div class="modal-backdrop" id="vaultEntryModalBackdrop" style="z-index: 220;">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 id="vaultEntryModalTitle">🔐 Yeni Şifre Ekle</h2>
-            <button class="modal-close" onclick="closeAddPasswordModal()">✕</button>
-        </div>
-        <form onsubmit="savePasswordEntry(event)">
-            <div class="form-group">
-                <label class="form-label">Hesap / Servis Adı</label>
-                <input type="text" id="vaultTitleInput" class="form-control" placeholder="Örn: Garanti BBVA, Gmail, Netflix, Trendyol..." required autocomplete="off">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Kategori</label>
-                <select id="vaultCategoryInput" class="form-control">
-                    <option value="bank">🏦 Banka & Finans</option>
-                    <option value="email">📧 E-Posta</option>
-                    <option value="social">🌐 Sosyal Medya</option>
-                    <option value="shopping">🛒 Alışveriş</option>
-                    <option value="work">💼 İş & Hizmetler</option>
-                    <option value="other">🔑 Diğer / Genel</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Kullanıcı Adı / E-Posta / Telefon</label>
-                <input type="text" id="vaultUsernameInput" class="form-control" placeholder="Örn: kullanici@gmail.com veya 0532..." required autocomplete="off">
-            </div>
-
-            <div class="form-group">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <label class="form-label" style="margin-bottom:0;">Şifre</label>
-                    <button type="button" class="btn" style="padding:2px 8px; font-size:11px;" onclick="fillGeneratedPassword()">
-                        🎲 Rastgele Güçlü Üret
-                    </button>
-                </div>
+        <!-- HIZLI ŞİFRE EKLEME FORMU -->
+        <form class="vault-simple-add-form" onsubmit="saveSimplePassword(event)">
+            <div style="font-size:12px; font-weight:700; color:var(--text-secondary); margin-bottom:8px;">+ Yeni Şifre Ekle</div>
+            <div class="vault-simple-inputs">
+                <input type="text" id="simpleVaultTitle" class="form-control" placeholder="Hesap / Uygulama Adı (Örn: Gmail, Banka, Netflix...)" required autocomplete="off">
+                <input type="text" id="simpleVaultUser" class="form-control" placeholder="Kullanıcı Adı / E-Posta / Telefon" required autocomplete="off">
                 <div style="position:relative; display:flex; align-items:center;">
-                    <input type="password" id="vaultPasswordInput" class="form-control" placeholder="Şifrenizi yazın..." required style="padding-right:40px;" autocomplete="new-password">
-                    <button type="button" class="vault-btn-icon" style="position:absolute; right:8px;" onclick="toggleVaultPasswordInput()" title="Göster / Gizle" id="vaultEyeBtn">
-                        👁
-                    </button>
+                    <input type="password" id="simpleVaultPass" class="form-control" placeholder="Şifreniz" required style="padding-right:60px;" autocomplete="new-password">
+                    <button type="button" class="vault-btn-icon" style="position:absolute; right:30px;" onclick="toggleSimplePassVisibility()" title="Göster / Gizle" id="simpleVaultEyeBtn">👁</button>
+                    <button type="button" class="vault-btn-icon" style="position:absolute; right:6px;" onclick="fillSimplePassword()" title="Rastgele Şifre Üret">🎲</button>
                 </div>
+                <button type="submit" class="btn btn-primary" style="padding:9px; justify-content:center;">
+                    + Şifreyi Kaydet
+                </button>
             </div>
-
-            <div class="form-group">
-                <label class="form-label">Web Sitesi / Giriş Adresi (Opsiyonel)</label>
-                <input type="text" id="vaultUrlInput" class="form-control" placeholder="Örn: https://garantibbva.com.tr" autocomplete="off">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Güvenlik Notları (Opsiyonel)</label>
-                <textarea id="vaultNotesInput" class="form-control" style="resize:vertical; min-height:55px;" placeholder="Gizli soru, ek pin veya kurtarma kodları..."></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:12px; margin-top:6px;">
-                Şifreyi Güvenle Kaydet
-            </button>
         </form>
+
+        <!-- ARAMA KUTUSU -->
+        <div style="margin-bottom:12px;">
+            <input type="text" id="vaultSearchInput" class="form-control" placeholder="🔍 Kayıtlı şifrelerimde ara..." oninput="handleVaultSearch(this.value)">
+        </div>
+
+        <!-- KAYITLI ŞİFRELER LİSTESİ -->
+        <div class="clean-list-container" id="vaultItemsContainer" style="overflow-y:auto; flex:1; max-height:55vh;"></div>
     </div>
 </div>
 
@@ -2312,59 +2388,50 @@
         render();
     }
 
-    // MOBİL ODAKLANMA MODU (FOCUS MODE)
-    function handleCardClick(type) {
-        if (window.innerWidth <= 768) {
-            if (currentFocusTab === type) {
-                setFocusMode('all');
-            } else {
-                setFocusMode(type);
-            }
-        } else {
-            toggleCardDrawer(type);
-        }
-    }
-
+    // 🧭 UYGULAMA GÖRÜNÜM GEÇİŞİ (Özet / Gelir / Gider / Borçlar)
     function setFocusMode(tab) {
         currentFocusTab = tab;
-        const container = document.getElementById('mainContainer');
-        
-        container.classList.remove('mobile-focus-income', 'mobile-focus-expense', 'mobile-focus-pending', 'mobile-focus-net');
-        
-        document.querySelectorAll('.focus-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
 
-        const tabBtn = document.getElementById(`tab-${tab}`);
-        if (tabBtn) tabBtn.classList.add('active');
+        const targetViewId = tab === 'all' ? 'view-summary' : `view-${tab}`;
+        const viewEl = document.getElementById(targetViewId);
+        if (viewEl) viewEl.classList.add('active');
 
         const navBtn = document.getElementById(`nav-${tab}`);
         if (navBtn) navBtn.classList.add('active');
 
-        const backBar = document.getElementById('focusBackBar');
-        const titleEl = document.getElementById('focusSectionTitle');
-
-        if (tab !== 'all') {
-            container.classList.add(`mobile-focus-${tab}`);
-            if (openDrawers[tab] !== undefined) openDrawers[tab] = true;
-            if (backBar) {
-                backBar.style.display = 'flex';
-                const titles = {
-                    income: '📥 Gelirler Detayı',
-                    expense: '📤 Giderler, Kredi Kartları & Faturalar',
-                    pending: '⏳ Kalan Borçlar & Radar',
-                    net: '🏦 Net Bakiye Özeti'
-                };
-                titleEl.textContent = titles[tab] || '';
-            }
-        } else {
-            if (backBar) backBar.style.display = 'none';
-            const navAll = document.getElementById('nav-all');
-            if (navAll) navAll.classList.add('active');
-        }
-
         render();
-        if (window.innerWidth <= 768) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 📤 GİDER 4 KISIMLI FİLTRELEME: Kredim | Kartlarım | Faturalarım | Diğer
+    let currentExpenseTab = 'credit';
+    function setExpenseTab(tab) {
+        currentExpenseTab = tab;
+        ['credit', 'cards', 'bills', 'other'].forEach(t => {
+            const btn = document.getElementById(`exp-tab-${t}`);
+            const sec = document.getElementById(`exp-section-${t}`);
+            if (btn) btn.classList.toggle('active', t === tab);
+            if (sec) sec.style.display = (t === tab) ? 'block' : 'none';
+        });
+    }
+
+    // 💳 KART BORCUNA TIKLAYINCA ANINDA DEĞİŞTİRME
+    function editCardAmount(itemId, currentAmount) {
+        const str = prompt("Bu ayki güncel kredi kartı ekstre borcunu girin (₺):", currentAmount);
+        if (str === null) return;
+        const val = parseFloat(str.replace(',', '.'));
+        if (isNaN(val) || val < 0) {
+            alert("Lütfen geçerli bir tutar girin.");
+            return;
+        }
+        const items = getActiveItems();
+        const item = items.find(x => x.id === itemId);
+        if (item) {
+            item.amount = Math.round(val * 100) / 100;
+            saveStore();
+            showToast(`✔ Ekstre borcu ${formatTL(item.amount)} olarak güncellendi`);
         }
     }
 
@@ -2720,9 +2787,9 @@
                         <button class="del-btn" onclick="deleteItem('${existingItem.id}')" title="Bu Ayki Ekstre Kaydını Sil">🗑</button>
                     </div>
                     <div class="card-action-box">
-                        <div>
-                            <span style="font-size:11px; color:var(--text-secondary);">Bu Ayki Ekstre Borcu:</span>
-                            <div class="num" style="font-size:15px; font-weight:800; color:var(--text-primary);">${formatTL(existingItem.amount)}</div>
+                        <div class="card-debt-clickable" onclick="editCardAmount('${existingItem.id}', ${existingItem.amount})" title="Borç tutarını değiştirmek için tıklayın">
+                            <span style="font-size:11px; color:var(--text-secondary);">Bu Ayki Ekstre Borcu (Değiştirmek için tıkla):</span>
+                            <div class="num" style="font-size:16px; font-weight:800; color:var(--text-primary);">${formatTL(existingItem.amount)} ✏️</div>
                         </div>
                         <button class="check-btn ${existingItem.paid ? 'checked' : ''}" onclick="togglePaid('${existingItem.id}')" title="Ödendi İşaretle">
                             ${existingItem.paid ? '✓' : ''}
@@ -2760,209 +2827,68 @@
         if (badge) badge.textContent = `${enteredCount}/${cards.length} İşlendi`;
     }
 
-    // 🔐 KİŞİSEL ŞİFRE KASASI (VAULT) SİSTEMİ
-    let isVaultUnlocked = false;
-    let currentVaultFilter = 'all';
+    // 🔑 KİŞİSEL ŞİFRE KASASI (TAM SAYFA BOYUNCA AÇILAN SADE VE GÜVENLİ SİSTEM)
     let currentVaultSearch = '';
-    let editingPasswordId = null;
     let visiblePasswords = {};
-    let generatedPasswordLength = 16;
-
-    const vaultCategories = {
-        bank: { name: 'Banka & Finans', icon: '🏦', badge: 'badge-purple' },
-        email: { name: 'E-Posta', icon: '📧', badge: 'badge-info' },
-        social: { name: 'Sosyal Medya', icon: '🌐', badge: 'badge-purple' },
-        shopping: { name: 'Alışveriş', icon: '🛒', badge: 'badge-warning' },
-        work: { name: 'İş & Hizmetler', icon: '💼', badge: 'badge-success' },
-        other: { name: 'Diğer / Genel', icon: '🔑', badge: 'badge-info' }
-    };
+    let simplePassVisible = false;
 
     function openVaultModal() {
-        const hasPin = Boolean(store.vaultPin && store.vaultPin.trim());
-        if (hasPin && !isVaultUnlocked) {
-            document.getElementById('vaultPinPromptModalBackdrop').classList.add('active');
-            const pinIn = document.getElementById('vaultUnlockPinInput');
-            if (pinIn) { pinIn.value = ''; setTimeout(() => pinIn.focus(), 60); }
-            return;
-        }
-
-        const currP = store.profiles.find(p => p.id === store.activeProfileId) || store.profiles[0];
-        const subEl = document.getElementById('vaultProfileSub');
-        if (subEl) subEl.textContent = `${currP.icon || '👤'} ${currP.name} Kasası`;
-
-        const lockBtn = document.getElementById('vaultLockNowBtn');
-        if (lockBtn) lockBtn.style.display = hasPin ? 'inline-flex' : 'none';
-
         document.getElementById('vaultModalBackdrop').classList.add('active');
         renderVaultItems();
+        setTimeout(() => {
+            const titleIn = document.getElementById('simpleVaultTitle');
+            if (titleIn) titleIn.focus();
+        }, 50);
     }
 
     function closeVaultModal() {
         document.getElementById('vaultModalBackdrop').classList.remove('active');
     }
 
-    function lockVault() {
-        isVaultUnlocked = false;
-        closeVaultModal();
-        showToast("🔒 Şifre Kasası Kilitlendi");
+    function toggleSimplePassVisibility() {
+        const passIn = document.getElementById('simpleVaultPass');
+        const eyeBtn = document.getElementById('simpleVaultEyeBtn');
+        if (!passIn) return;
+        simplePassVisible = !simplePassVisible;
+        passIn.type = simplePassVisible ? 'text' : 'password';
+        if (eyeBtn) eyeBtn.textContent = simplePassVisible ? '🙈' : '👁';
     }
 
-    function unlockVault(e) {
-        e.preventDefault();
-        const pinIn = document.getElementById('vaultUnlockPinInput');
-        const val = pinIn.value.trim();
-        if (val === store.vaultPin) {
-            isVaultUnlocked = true;
-            document.getElementById('vaultPinPromptModalBackdrop').classList.remove('active');
-            openVaultModal();
-            showToast("🔓 Kasa Açıldı");
-        } else {
-            alert("Hatalı PIN Kodu! Lütfen tekrar deneyin.");
-            pinIn.value = '';
-            pinIn.focus();
-        }
-    }
-
-    function closeVaultPinPromptModal() {
-        document.getElementById('vaultPinPromptModalBackdrop').classList.remove('active');
-    }
-
-    function openSetPinModal() {
-        document.getElementById('vaultSetPinModalBackdrop').classList.add('active');
-        const pinInput = document.getElementById('vaultNewPinInput');
-        if (pinInput) {
-            pinInput.value = store.vaultPin || '';
-            setTimeout(() => pinInput.focus(), 60);
-        }
-    }
-
-    function closeSetPinModal() {
-        document.getElementById('vaultSetPinModalBackdrop').classList.remove('active');
-    }
-
-    function savePinSetting(e) {
-        e.preventDefault();
-        const pinVal = document.getElementById('vaultNewPinInput').value.trim();
-        if (pinVal) {
-            store.vaultPin = pinVal;
-            isVaultUnlocked = true;
-            showToast("🔒 PIN Koruması Aktifleştirildi");
-        } else {
-            store.vaultPin = null;
-            isVaultUnlocked = true;
-            showToast("🔓 PIN Koruması Kaldırıldı");
-        }
-        saveStore(false);
-        closeSetPinModal();
-        const lockBtn = document.getElementById('vaultLockNowBtn');
-        if (lockBtn) lockBtn.style.display = store.vaultPin ? 'inline-flex' : 'none';
-    }
-
-    function openAddPasswordModal(editId = null) {
-        editingPasswordId = editId;
-        const modal = document.getElementById('vaultEntryModalBackdrop');
-        const titleEl = document.getElementById('vaultEntryModalTitle');
-        const eyeBtn = document.getElementById('vaultEyeBtn');
-        const passIn = document.getElementById('vaultPasswordInput');
-        passIn.type = 'password';
-        if (eyeBtn) eyeBtn.textContent = '👁';
-
-        if (editId) {
-            const list = getActivePasswords();
-            const item = list.find(x => x.id === editId);
-            if (item) {
-                titleEl.textContent = '✏ Şifreyi Düzenle';
-                document.getElementById('vaultTitleInput').value = item.title || '';
-                document.getElementById('vaultCategoryInput').value = item.category || 'other';
-                document.getElementById('vaultUsernameInput').value = item.username || '';
-                document.getElementById('vaultPasswordInput').value = item.password || '';
-                document.getElementById('vaultUrlInput').value = item.url || '';
-                document.getElementById('vaultNotesInput').value = item.notes || '';
-            }
-        } else {
-            titleEl.textContent = '🔐 Yeni Şifre Ekle';
-            document.getElementById('vaultTitleInput').value = '';
-            document.getElementById('vaultCategoryInput').value = 'bank';
-            document.getElementById('vaultUsernameInput').value = '';
-            document.getElementById('vaultPasswordInput').value = '';
-            document.getElementById('vaultUrlInput').value = '';
-            document.getElementById('vaultNotesInput').value = '';
-        }
-
-        modal.classList.add('active');
-        setTimeout(() => document.getElementById('vaultTitleInput').focus(), 60);
-    }
-
-    function closeAddPasswordModal() {
-        document.getElementById('vaultEntryModalBackdrop').classList.remove('active');
-        editingPasswordId = null;
-    }
-
-    function toggleVaultPasswordInput() {
-        const passIn = document.getElementById('vaultPasswordInput');
-        const eyeBtn = document.getElementById('vaultEyeBtn');
-        if (passIn.type === 'password') {
-            passIn.type = 'text';
-            eyeBtn.textContent = '🙈';
-        } else {
-            passIn.type = 'password';
-            eyeBtn.textContent = '👁';
-        }
-    }
-
-    function fillGeneratedPassword() {
+    function fillSimplePassword() {
         const pwd = generateSecurePassword(16, true, true, true, true);
-        const passIn = document.getElementById('vaultPasswordInput');
-        passIn.value = pwd;
-        passIn.type = 'text';
-        const eyeBtn = document.getElementById('vaultEyeBtn');
-        if (eyeBtn) eyeBtn.textContent = '🙈';
-        showToast("🎲 Güçlü şifre oluşturuldu ve yazıldı");
+        const passIn = document.getElementById('simpleVaultPass');
+        if (passIn) {
+            passIn.value = pwd;
+            passIn.type = 'text';
+            simplePassVisible = true;
+            const eyeBtn = document.getElementById('simpleVaultEyeBtn');
+            if (eyeBtn) eyeBtn.textContent = '🙈';
+            showToast("🎲 Rastgele güçlü şifre üretildi");
+        }
     }
 
-    function savePasswordEntry(e) {
+    function saveSimplePassword(e) {
         e.preventDefault();
-        const title = document.getElementById('vaultTitleInput').value.trim();
-        const category = document.getElementById('vaultCategoryInput').value;
-        const username = document.getElementById('vaultUsernameInput').value.trim();
-        const password = document.getElementById('vaultPasswordInput').value;
-        const url = document.getElementById('vaultUrlInput').value.trim();
-        const notes = document.getElementById('vaultNotesInput').value.trim();
+        const title = document.getElementById('simpleVaultTitle').value.trim();
+        const username = document.getElementById('simpleVaultUser').value.trim();
+        const password = document.getElementById('simpleVaultPass').value;
 
         if (!title || !username || !password) return;
 
         const list = getActivePasswords();
-        const nowStr = new Date().toLocaleDateString('tr-TR');
-
-        if (editingPasswordId) {
-            const item = list.find(x => x.id === editingPasswordId);
-            if (item) {
-                item.title = title;
-                item.category = category;
-                item.username = username;
-                item.password = password;
-                item.url = url;
-                item.notes = notes;
-                item.updatedAt = nowStr;
-                showToast(`✔ "${title}" Güncellendi`);
-            }
-        } else {
-            list.push({
-                id: 'pwd_' + Date.now(),
-                title,
-                category,
-                username,
-                password,
-                url,
-                notes,
-                createdAt: nowStr,
-                updatedAt: nowStr
-            });
-            showToast(`✔ "${title}" Kasaya Eklendi`);
-        }
+        list.push({
+            id: 'pwd_' + Date.now(),
+            title,
+            username,
+            password,
+            createdAt: new Date().toLocaleDateString('tr-TR')
+        });
 
         saveStore(false);
-        closeAddPasswordModal();
+        document.getElementById('simpleVaultTitle').value = '';
+        document.getElementById('simpleVaultUser').value = '';
+        document.getElementById('simpleVaultPass').value = '';
+        showToast(`✔ "${title}" Şifresi Kaydedildi`);
         renderVaultItems();
     }
 
@@ -2980,14 +2906,6 @@
         renderVaultItems();
     }
 
-    function setVaultFilter(cat) {
-        currentVaultFilter = cat;
-        document.querySelectorAll('.vault-pill').forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${cat}'`));
-        });
-        renderVaultItems();
-    }
-
     function handleVaultSearch(query) {
         currentVaultSearch = (query || '').toLowerCase().trim();
         renderVaultItems();
@@ -2998,19 +2916,12 @@
         if (!container) return;
 
         const allItems = getActivePasswords();
-        const countAll = document.getElementById('vaultCountAll');
-        if (countAll) countAll.textContent = allItems.length;
-
         let filtered = allItems;
-        if (currentVaultFilter !== 'all') {
-            filtered = filtered.filter(x => x.category === currentVaultFilter);
-        }
 
         if (currentVaultSearch) {
             filtered = filtered.filter(x =>
                 (x.title && x.title.toLowerCase().includes(currentVaultSearch)) ||
-                (x.username && x.username.toLowerCase().includes(currentVaultSearch)) ||
-                (x.notes && x.notes.toLowerCase().includes(currentVaultSearch))
+                (x.username && x.username.toLowerCase().includes(currentVaultSearch))
             );
         }
 
@@ -3018,85 +2929,41 @@
 
         if (!filtered.length) {
             container.innerHTML = `
-                <div class="empty-state" style="grid-column: 1/-1; padding:24px;">
+                <div class="empty-state" style="padding:24px;">
                     <div style="font-size:32px; margin-bottom:8px;">🔑</div>
-                    ${currentVaultSearch ? 'Aramanıza uygun şifre bulunamadı.' : 'Henüz bu kategoride kayıtlı şifreniz bulunmuyor.'}<br>
-                    <button class="btn btn-primary" style="margin-top:12px; font-size:12px; padding:6px 14px;" onclick="openAddPasswordModal()">
-                        + Yeni Şifre Ekle
-                    </button>
+                    ${currentVaultSearch ? 'Aramanıza uygun şifre bulunamadı.' : 'Henüz kayıtlı şifreniz bulunmuyor. Yukarıdaki formdan ekleyebilirsiniz.'}
                 </div>
             `;
             return;
         }
 
         filtered.forEach(item => {
-            const catInfo = vaultCategories[item.category] || vaultCategories.other;
             const isVisible = Boolean(visiblePasswords[item.id]);
-
             const card = document.createElement('div');
-            card.className = 'vault-card';
-
-            const cleanUrl = (item.url || '').replace(/^https?:\/\//i, '').replace(/\/$/, '');
+            card.className = 'item-row';
+            card.style.background = 'var(--bg-input)';
+            card.style.borderRadius = '10px';
+            card.style.padding = '12px';
 
             card.innerHTML = `
-                <div>
-                    <div class="vault-card-header">
-                        <div class="vault-card-title-group">
-                            <div class="vault-card-icon">${catInfo.icon}</div>
-                            <div>
-                                <div class="vault-card-title">${item.title}</div>
-                                <span class="badge ${catInfo.badge}" style="font-size:10px; padding:2px 6px;">${catInfo.name}</span>
-                            </div>
-                        </div>
+                <div style="flex:1; min-width:0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="font-weight:800; font-size:14px; color:var(--text-primary);">${item.title}</span>
+                        <button class="del-btn" onclick="deletePasswordEntry('${item.id}')" title="Şifreyi Sil">🗑</button>
+                    </div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:var(--text-secondary); margin-bottom:4px;">
+                        <span>Kullanıcı: <strong style="color:var(--text-primary);">${item.username}</strong></span>
+                        <button class="vault-btn-icon" onclick="copyToClipboard('${item.username.replace(/'/g, "\\'")}', '📋 Kullanıcı adı kopyalandı!')" title="Kullanıcı adını kopyala">📋</button>
+                    </div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:var(--text-secondary);">
+                        <span>Şifre: <strong style="color:var(--text-primary); font-family:monospace; font-size:13px;">${isVisible ? item.password : '••••••••••••'}</strong></span>
                         <div style="display:flex; gap:4px;">
-                            <button class="vault-btn-icon" onclick="openAddPasswordModal('${item.id}')" title="Düzenle">✏</button>
-                            <button class="vault-btn-icon" style="color:var(--danger);" onclick="deletePasswordEntry('${item.id}')" title="Sil">🗑</button>
+                            <button class="vault-btn-icon" onclick="togglePasswordVisibility('${item.id}')" title="${isVisible ? 'Gizle' : 'Göster'}">${isVisible ? '🙈' : '👁'}</button>
+                            <button class="vault-btn-icon" onclick="copyToClipboard('${item.password.replace(/'/g, "\\'")}', '📋 Şifre kopyalandı!')" title="Şifreyi kopyala">📋</button>
                         </div>
                     </div>
-
-                    <!-- KULLANICI ADI -->
-                    <div class="vault-field-row" style="margin-top:10px;">
-                        <span style="font-size:11px; color:var(--text-secondary); width:55px;">Kullanıcı:</span>
-                        <span class="vault-field-val" title="${item.username}">${item.username}</span>
-                        <button class="vault-btn-icon" onclick="copyToClipboard('${item.username.replace(/'/g, "\\'")}', '📋 Kullanıcı adı kopyalandı!')" title="Kullanıcı Adını Kopyala">
-                            📋
-                        </button>
-                    </div>
-
-                    <!-- ŞİFRE -->
-                    <div class="vault-field-row">
-                        <span style="font-size:11px; color:var(--text-secondary); width:55px;">Şifre:</span>
-                        <span class="vault-field-val" style="letter-spacing:${isVisible ? 'normal' : '2px'}; font-weight:700;">
-                            ${isVisible ? item.password : '••••••••••••'}
-                        </span>
-                        <button class="vault-btn-icon" onclick="togglePasswordVisibility('${item.id}')" title="${isVisible ? 'Gizle' : 'Göster'}">
-                            ${isVisible ? '🙈' : '👁'}
-                        </button>
-                        <button class="vault-btn-icon" onclick="copyToClipboard('${item.password.replace(/'/g, "\\'")}', '📋 Şifre kopyalandı!')" title="Şifreyi Kopyala">
-                            📋
-                        </button>
-                    </div>
-
-                    ${item.url ? `
-                    <div style="margin-top:6px; font-size:11px;">
-                        <a href="${item.url.startsWith('http') ? item.url : 'https://' + item.url}" target="_blank" rel="noopener noreferrer" style="color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
-                            🔗 ${cleanUrl}
-                        </a>
-                    </div>
-                    ` : ''}
-
-                    ${item.notes ? `
-                    <div style="margin-top:6px; font-size:11px; color:var(--text-secondary); background:var(--bg-input); padding:6px 8px; border-radius:6px; border:1px solid var(--border);">
-                        📝 ${item.notes}
-                    </div>
-                    ` : ''}
-                </div>
-
-                <div style="font-size:10px; color:var(--text-muted); text-align:right; border-top:1px dashed var(--border); padding-top:6px; margin-top:6px;">
-                    ${item.updatedAt ? `Güncellendi: ${item.updatedAt}` : ''}
                 </div>
             `;
-
             container.appendChild(card);
         });
     }
@@ -3192,12 +3059,13 @@
     function render() {
         renderProfiles();
         const ym = getMonthKey(currentYear, currentMonth);
-        document.getElementById('monthLabel').textContent = `${monthsTR[currentMonth]} ${currentYear}`;
+        const monthLabel = document.getElementById('monthLabel');
+        if (monthLabel) monthLabel.textContent = `${monthsTR[currentMonth]} ${currentYear}`;
 
         const items = getActiveItems();
         const monthItems = items.filter(x => x.ym === ym);
 
-        let income = 0, expense = 0, pending = 0, pendingCount = 0;
+        let income = 0, expense = 0, pending = 0;
 
         monthItems.forEach(item => {
             if (item.type === 'income') {
@@ -3206,26 +3074,90 @@
                 expense += item.amount;
                 if (!item.paid) {
                     pending += item.amount;
-                    pendingCount++;
                 }
             }
         });
 
         const net = income - expense;
 
-        document.getElementById('kpiIncome').textContent = formatTL(income);
-        document.getElementById('kpiExpense').textContent = formatTL(expense);
-        document.getElementById('kpiPending').textContent = formatTL(pending);
-        document.getElementById('pendingCountBadge').textContent = `${pendingCount} Bekleyen`;
+        // 1. ÖZET EKRANI: SADECE 4 ANA MENÜ TOPLAMLARI (GELİR, GİDER, BORÇ, KALAN)
+        const kpiIncomeEl = document.getElementById('kpiIncome');
+        const kpiExpenseEl = document.getElementById('kpiExpense');
+        const kpiPendingEl = document.getElementById('kpiPending');
+        const kpiNetEl = document.getElementById('kpiNet');
 
-        const netEl = document.getElementById('kpiNet');
-        netEl.textContent = formatTL(net);
-        netEl.style.color = net >= 0 ? 'var(--accent)' : 'var(--danger)';
+        if (kpiIncomeEl) kpiIncomeEl.textContent = formatTL(income);
+        if (kpiExpenseEl) kpiExpenseEl.textContent = formatTL(expense);
+        if (kpiPendingEl) kpiPendingEl.textContent = formatTL(pending);
+        if (kpiNetEl) {
+            kpiNetEl.textContent = formatTL(net);
+            kpiNetEl.style.color = net >= 0 ? 'var(--accent)' : 'var(--danger)';
+        }
 
-        renderBills(monthItems);
+        // 2. GELİRLER GÖRÜNÜMÜ: Ödeme / Giriş Gününe Göre Sıralı
+        const incomeTotalBadge = document.getElementById('incomeTotalBadge');
+        if (incomeTotalBadge) incomeTotalBadge.textContent = formatTL(income);
+
+        const bodyIncome = document.getElementById('body-income');
+        if (bodyIncome) {
+            bodyIncome.innerHTML = '';
+            const incomeList = monthItems.filter(x => x.type === 'income');
+            incomeList.sort((a, b) => (a.dueDay || 99) - (b.dueDay || 99));
+            if (!incomeList.length) {
+                bodyIncome.innerHTML = '<div class="empty-state">Bu ay için henüz gelir kaydı girilmemiş. "+ Gelir Ekle" butonuna basarak ekleyebilirsiniz.</div>';
+            } else {
+                incomeList.forEach(item => bodyIncome.appendChild(createRow(item)));
+            }
+        }
+
+        // 3. GİDERLER GÖRÜNÜMÜ (4 KISIM: Kredim | Kartlarım | Faturalarım | Diğer)
+        // a) Kredim & Taksitler
+        const bodyCredit = document.getElementById('body-credit-list');
+        if (bodyCredit) {
+            bodyCredit.innerHTML = '';
+            const creditList = monthItems.filter(x => x.type === 'expense' && (x.category === 'card' || x.instText) && !x.cardDefId);
+            creditList.sort((a, b) => (a.dueDay || 99) - (b.dueDay || 99));
+            if (!creditList.length) {
+                bodyCredit.innerHTML = '<div class="empty-state">Bu ay için kredi veya taksitli ödeme kaydı bulunmuyor.</div>';
+            } else {
+                creditList.forEach(item => bodyCredit.appendChild(createRow(item)));
+            }
+        }
+
+        // b) Kartlarım
         renderCards(monthItems);
-        renderUpcoming(monthItems);
-        renderAllDrawers(monthItems, income, expense, pending, net);
+
+        // c) Faturalarım
+        renderBills(monthItems);
+
+        // d) Diğer Harcamalar & Sabit Giderler
+        const bodyOther = document.getElementById('body-other-expenses');
+        if (bodyOther) {
+            bodyOther.innerHTML = '';
+            const otherList = monthItems.filter(x => x.type === 'expense' && x.category !== 'bill' && !x.cardDefId && !x.instText);
+            otherList.sort((a, b) => (a.dueDay || 99) - (b.dueDay || 99));
+            if (!otherList.length) {
+                bodyOther.innerHTML = '<div class="empty-state">Bu ay için henüz diğer harcama kaydı bulunmuyor.</div>';
+            } else {
+                otherList.forEach(item => bodyOther.appendChild(createRow(item)));
+            }
+        }
+
+        // 4. BORÇLAR GÖRÜNÜMÜ: SADECE ÖDENECEK OLANLAR (Tarihe Göre Sıralı, Fazla Detay Yok)
+        const pendingTotalBadge = document.getElementById('pendingTotalBadge');
+        if (pendingTotalBadge) pendingTotalBadge.textContent = formatTL(pending);
+
+        const bodyPending = document.getElementById('body-pending-list');
+        if (bodyPending) {
+            bodyPending.innerHTML = '';
+            const pendingList = monthItems.filter(x => x.type === 'expense' && !x.paid);
+            pendingList.sort((a, b) => (a.dueDay || 99) - (b.dueDay || 99));
+            if (!pendingList.length) {
+                bodyPending.innerHTML = '<div class="empty-state">🎉 Harika! Bu ay ödenecek hiçbir borç kalmadı, hepsi ödendi.</div>';
+            } else {
+                pendingList.forEach(item => bodyPending.appendChild(createRow(item)));
+            }
+        }
     }
 
     function createRow(item) {
@@ -3256,15 +3188,15 @@
             statusHTML = `<span class="badge ${st.cls}">${st.text}</span>`;
         } else {
             if (item.dueDay) {
-                statusHTML = `<span class="badge badge-success">💵 Net Gelir</span> <span class="badge badge-info">📅 Ayın ${item.dueDay}'i</span>`;
+                statusHTML = `<span class="badge badge-success">💵 Gelir</span> <span class="badge badge-info">📅 Ayın ${item.dueDay}'i</span>`;
             } else {
-                statusHTML = `<span class="badge badge-success">💵 Net Gelir</span>`;
+                statusHTML = `<span class="badge badge-success">💵 Gelir</span>`;
             }
         }
 
         div.innerHTML = `
             <div class="item-left">
-                ${!isIncome ? `<button class="check-btn ${item.paid ? 'checked' : ''}" onclick="togglePaid('${item.id}')" title="Ödendi İşaretle">${item.paid ? '✓' : ''}</button>` : `<span style="font-size:16px;">💵</span>`}
+                ${!isIncome ? `<button class="check-btn ${item.paid ? 'checked' : ''}" onclick="togglePaid('${item.id}')" title="Ödendi İşaretle">${item.paid ? '✓' : ''}</button>` : `<span style="font-size:18px;">💵</span>`}
                 <div class="item-info">
                     <div class="item-title">${item.title} ${badges}</div>
                     <div class="item-meta">${statusHTML}</div>
@@ -3278,98 +3210,6 @@
             </div>
         `;
         return div;
-    }
-
-    function renderUpcoming(monthItems) {
-        const upcomingList = document.getElementById('upcomingList');
-        upcomingList.innerHTML = '';
-
-        const unpaidExpenses = monthItems
-            .filter(x => x.type === 'expense' && !x.paid)
-            .map(x => ({ ...x, status: getDueStatus(x.dueDay, false) }))
-            .sort((a, b) => a.status.diff - b.status.diff);
-
-        if (unpaidExpenses.length === 0) {
-            upcomingList.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;">🎉 Harika! Bu ay için bekleyen veya yaklaşan hiçbir borç ödemesi kalmadı.</div>`;
-            return;
-        }
-
-        unpaidExpenses.forEach(item => {
-            const card = document.createElement('div');
-            card.className = `upcoming-card ${item.status.urgency || 'normal'}`;
-            card.innerHTML = `
-                <div>
-                    <div style="font-weight:700; font-size:14px; margin-bottom:4px;">${item.title} ${item.instText ? `<span class="badge badge-purple">${item.instText}</span>` : ''}</div>
-                    <span class="badge ${item.status.cls}">${item.status.text}</span>
-                </div>
-                <div style="text-align:right; display:flex; align-items:center; gap:10px;">
-                    <div class="num" style="font-weight:800; font-size:15px;">${formatTL(item.amount)}</div>
-                    <button class="check-btn" onclick="togglePaid('${item.id}')" title="Hemen Ödendi İşaretle"></button>
-                </div>
-            `;
-            upcomingList.appendChild(card);
-        });
-    }
-
-    function toggleCardDrawer(type) {
-        openDrawers[type] = !openDrawers[type];
-        render();
-    }
-
-    function closeCardDrawer(type) {
-        openDrawers[type] = false;
-        if (window.innerWidth <= 768 && currentFocusTab === type) {
-            setFocusMode('all');
-        } else {
-            render();
-        }
-    }
-
-    function renderAllDrawers(monthItems, income, expense, pending, net) {
-        ['income', 'expense', 'pending', 'net'].forEach(type => {
-            const isOpen = openDrawers[type];
-            const drawerEl = document.getElementById(`drawer-${type}`);
-            const cardEl = document.getElementById(`card-${type}`);
-            const bodyEl = document.getElementById(`body-${type}`);
-            const arrowEl = document.getElementById(`arrow-${type}`);
-
-            cardEl.classList.toggle('active-drawer', isOpen);
-            drawerEl.classList.toggle('open', isOpen);
-            if (arrowEl) arrowEl.textContent = isOpen ? '▲ Kapat' : (type === 'expense' ? '▼ Detaylar & Kart/Fatura' : '▼ Detaylar');
-
-            if (!isOpen) return;
-
-            if (type === 'income') {
-                bodyEl.innerHTML = '';
-                const items = monthItems.filter(x => x.type === 'income');
-                items.sort((a, b) => (a.dueDay || 99) - (b.dueDay || 99));
-                if (!items.length) bodyEl.innerHTML = '<div class="empty-state">Gelir kaydı bulunmuyor.</div>';
-                items.forEach(i => bodyEl.appendChild(createRow(i)));
-            } else if (type === 'expense') {
-                bodyEl.innerHTML = '';
-                const generalExpenses = monthItems.filter(x => x.type === 'expense' && x.category !== 'bill' && !x.cardDefId);
-                if (!generalExpenses.length) {
-                    bodyEl.innerHTML = '<div class="empty-state">Henüz ek harcama veya gider kaydı bulunmuyor.</div>';
-                } else {
-                    generalExpenses.forEach(i => bodyEl.appendChild(createRow(i)));
-                }
-            } else if (type === 'pending') {
-                bodyEl.innerHTML = '';
-                const items = monthItems.filter(x => x.type === 'expense' && !x.paid);
-                if (!items.length) bodyEl.innerHTML = '<div class="empty-state">🎉 Tüm borçlar ödendi! Kalan borç yok.</div>';
-                items.forEach(i => bodyEl.appendChild(createRow(i)));
-            } else if (type === 'net') {
-                const paidExp = expense - pending;
-                bodyEl.innerHTML = `
-                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px;">
-                        <div class="upcoming-card normal"><span>Toplam Gelir:</span><strong class="num" style="color:var(--success)">${formatTL(income)}</strong></div>
-                        <div class="upcoming-card soon"><span>Ödenen Gider:</span><strong class="num">${formatTL(paidExp)}</strong></div>
-                        <div class="upcoming-card urgent"><span>Kalan Borç:</span><strong class="num" style="color:var(--warning)">${formatTL(pending)}</strong></div>
-                        <div class="upcoming-card normal"><span>Cebe Kalan Net:</span><strong class="num" style="color:var(--accent)">${formatTL(net)}</strong></div>
-                    </div>
-                `;
-            }
-        });
     }
 
     function togglePaid(id) {
@@ -3641,18 +3481,14 @@
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            closeModal();
-            closeProfileModal();
-            closeAddBillDefModal();
-            closeAddCardDefModal();
-            closeBackupModal();
-            closeVaultModal();
-            closeAddPasswordModal();
-            closeVaultPinPromptModal();
-            closeSetPinModal();
-            closePasswordGeneratorModal();
-            document.getElementById('profileDropdown').classList.remove('show');
-            openDrawers = { income: false, expense: false, pending: false, net: false };
+            if (typeof closeModal === 'function') closeModal();
+            if (typeof closeProfileModal === 'function') closeProfileModal();
+            if (typeof closeAddBillDefModal === 'function') closeAddBillDefModal();
+            if (typeof closeAddCardDefModal === 'function') closeAddCardDefModal();
+            if (typeof closeBackupModal === 'function') closeBackupModal();
+            if (typeof closeVaultModal === 'function') closeVaultModal();
+            const profDd = document.getElementById('profileDropdown');
+            if (profDd) profDd.classList.remove('show');
             render();
         }
     });
