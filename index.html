@@ -66,13 +66,18 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html {
+            height: 100%;
+            background-color: var(--bg-main);
+        }
+
         body {
             background-color: var(--bg-main);
             color: var(--text-primary);
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
+            min-height: 100%;
+            margin: 0;
             padding-top: max(calc(env(safe-area-inset-top) + 14px), 20px);
-            padding-bottom: max(calc(env(safe-area-inset-bottom) + 85px), 96px);
+            padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px));
             padding-left: max(env(safe-area-inset-left), 20px);
             padding-right: max(env(safe-area-inset-right), 20px);
             transition: background-color 0.2s, color 0.2s;
@@ -1332,13 +1337,30 @@
             bottom: 0;
             left: 0;
             right: 0;
+            width: 100%;
             background: var(--bg-card);
             border-top: 1px solid var(--border);
-            padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+            padding-top: 8px;
+            padding-left: 12px;
+            padding-right: 12px;
+            padding-bottom: max(calc(env(safe-area-inset-bottom, 0px) + 8px), 16px);
             z-index: 90;
             justify-content: space-around;
             align-items: center;
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Garantili alt arka plan uzantısı: asla altta boşluk kalmaz */
+        .mobile-bottom-bar::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: var(--bg-card);
+            pointer-events: none;
         }
 
         @media (min-width: 769px) {
@@ -1350,6 +1372,10 @@
                 border-left: 1px solid var(--border);
                 border-right: 1px solid var(--border);
                 box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.25);
+                padding-bottom: 8px;
+            }
+            .mobile-bottom-bar::after {
+                display: none;
             }
         }
 
@@ -1853,7 +1879,7 @@
         <div class="exp-sub-section" id="exp-section-credit">
             <div class="view-sub-header">
                 <div class="view-sub-title">🏦 Kredi & Taksit Ödemeleri</div>
-                <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddModal('expense', 'card')">
+                <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddModal('expense', 'credit')">
                     + Kredi / Taksit Ekle
                 </button>
             </div>
@@ -1867,11 +1893,17 @@
                     <span>💳 Kredi Kartlarım</span>
                     <span class="badge badge-purple" id="cardsStatusBadge" style="margin-left:6px;">0/0 İşlendi</span>
                 </div>
-                <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddCardDefModal()">
-                    + Yeni Kart Tanımla
-                </button>
+                <div style="display:flex; gap:6px;">
+                    <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddModal('expense', 'card')">
+                        + Kart Harcaması
+                    </button>
+                    <button class="btn" style="padding:5px 10px; font-size:12px;" onclick="openAddCardDefModal()" title="Yeni Kredi Kartı Tanımla">
+                        + Kart Tanımla
+                    </button>
+                </div>
             </div>
             <div class="cards-grid" id="cardsListContainer"></div>
+            <div class="clean-list-container" id="cardsManualListContainer" style="margin-top:12px;"></div>
         </div>
 
         <!-- 3. Faturalarım -->
@@ -1881,18 +1913,24 @@
                     <span>🧾 Düzenli Faturalarım</span>
                     <span class="badge badge-purple" id="billsStatusBadge" style="margin-left:6px;">0/0 İşlendi</span>
                 </div>
-                <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddBillDefModal()">
-                    + Yeni Fatura Tanımla
-                </button>
+                <div style="display:flex; gap:6px;">
+                    <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddModal('expense', 'bill')">
+                        + Fatura Ekle
+                    </button>
+                    <button class="btn" style="padding:5px 10px; font-size:12px;" onclick="openAddBillDefModal()" title="Yeni Fatura Şablonu Tanımla">
+                        + Fatura Tanımla
+                    </button>
+                </div>
             </div>
             <div class="bills-grid" id="billsListContainer"></div>
+            <div class="clean-list-container" id="billsManualListContainer" style="margin-top:12px;"></div>
         </div>
 
         <!-- 4. Diğer Giderler -->
         <div class="exp-sub-section" id="exp-section-other" style="display:none;">
             <div class="view-sub-header">
                 <div class="view-sub-title">📋 Diğer Harcamalar & Sabit Giderler</div>
-                <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddModal('expense', 'fixed')">
+                <button class="btn btn-primary" style="padding:5px 12px; font-size:12px;" onclick="openAddModal('expense', 'other')">
                     + Gider Ekle
                 </button>
             </div>
@@ -1951,11 +1989,12 @@
 
             <div class="form-row">
                 <div class="form-group" id="categoryGroup">
-                    <label class="form-label">Gider Grubu</label>
-                    <select id="categoryInput" class="form-control">
-                        <option value="bill">🧾 Fatura (Elektrik, Su, Doğalgaz...)</option>
-                        <option value="fixed">🏠 Sabitler (Kira, Aidat)</option>
-                        <option value="card">💳 Kart / Kredi / Alışveriş</option>
+                    <label class="form-label">Gider Bölümü</label>
+                    <select id="categoryInput" class="form-control" onchange="onCategoryInputChange()">
+                        <option value="credit">🏦 Kredim</option>
+                        <option value="card">💳 Kartlarım</option>
+                        <option value="bill">🧾 Faturalarım</option>
+                        <option value="other">📋 Diğer</option>
                     </select>
                 </div>
                 <div class="form-group" id="amountGroup">
@@ -2749,6 +2788,21 @@
 
         const badge = document.getElementById('billsStatusBadge');
         if (badge) badge.textContent = `${enteredCount}/${bills.length} İşlendi`;
+
+        // Faturalarım sekmesine eklenen ek/manuel faturalar
+        const manualBillsContainer = document.getElementById('billsManualListContainer');
+        if (manualBillsContainer) {
+            manualBillsContainer.innerHTML = '';
+            const manualBills = monthItems.filter(x => x.type === 'expense' && x.category === 'bill' && !x.billDefId);
+            manualBills.sort((a, b) => (a.dueDay || 99) - (b.dueDay || 99));
+            if (manualBills.length > 0) {
+                const header = document.createElement('div');
+                header.style.cssText = 'font-size:12px; font-weight:700; color:var(--text-secondary); margin:12px 0 6px 0;';
+                header.textContent = 'Ek / Manuel Faturalar:';
+                manualBillsContainer.appendChild(header);
+                manualBills.forEach(item => manualBillsContainer.appendChild(createRow(item)));
+            }
+        }
     }
 
     // 💳 KREDİ KARTI ŞABLONLARI & EKSTRE YÖNETİMİ
@@ -2866,68 +2920,82 @@
             `;
             const badge = document.getElementById('cardsStatusBadge');
             if (badge) badge.textContent = `0/0 İşlendi`;
-            return;
+        } else {
+            cards.forEach(c => {
+                const existingItem = monthItems.find(x => (x.cardDefId === c.id) || (x.category === 'card' && x.title === `${c.name} (Ekstre)`));
+
+                const cardEl = document.createElement('div');
+                cardEl.className = `credit-card-box ${existingItem ? 'entered' : 'waiting'}`;
+
+                if (existingItem) {
+                    enteredCount++;
+                    const st = getDueStatus(c.dueDay, existingItem.paid);
+                    cardEl.innerHTML = `
+                        <div class="card-top">
+                            <div class="card-info">
+                                <div class="card-icon">${c.icon || '💳'}</div>
+                                <div>
+                                    <div class="card-text-name">${c.name}</div>
+                                    <div class="card-text-due">Kesim: Ayın ${c.cutoffDay}'i • Son Ödeme: Ayın ${c.dueDay}'i • <span class="badge ${st.cls}">${st.text}</span></div>
+                                </div>
+                            </div>
+                            <button class="del-btn" onclick="deleteItem('${existingItem.id}')" title="Bu Ayki Ekstre Kaydını Sil">🗑</button>
+                        </div>
+                        <div class="card-action-box">
+                            <div class="card-debt-clickable" onclick="editCardAmount('${existingItem.id}', ${existingItem.amount})" title="Borç tutarını değiştirmek için tıklayın">
+                                <span style="font-size:11px; color:var(--text-secondary);">Bu Ayki Ekstre Borcu:</span>
+                                <div class="num" style="font-size:16px; font-weight:800; color:var(--text-primary);">${formatTL(existingItem.amount)} ✏️</div>
+                            </div>
+                            <button class="check-btn ${existingItem.paid ? 'checked' : ''}" onclick="togglePaid('${existingItem.id}')" title="Ödendi İşaretle">
+                                ${existingItem.paid ? '✓' : ''}
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    const cutoffSt = getCutoffStatus(c.cutoffDay);
+                    cardEl.innerHTML = `
+                        <div class="card-top">
+                            <div class="card-info">
+                                <div class="card-icon">${c.icon || '💳'}</div>
+                                <div>
+                                    <div class="card-text-name">${c.name}</div>
+                                    <div class="card-text-due">Kesim: Ayın ${c.cutoffDay}'i • Son Gün: Ayın ${c.dueDay}'i • <span class="badge ${cutoffSt.cls}">${cutoffSt.text}</span></div>
+                                </div>
+                            </div>
+                            <button class="del-btn" onclick="deleteCardDef('${c.id}')" title="Kart Şablonunu Sil">✕</button>
+                        </div>
+                        <div class="card-action-box">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <input type="number" step="0.01" id="card-input-${c.id}" class="bill-input-field" placeholder="0.00 ₺">
+                            </div>
+                            <button class="btn btn-primary" style="padding:5px 10px; font-size:11px;" onclick="submitCardAmount('${c.id}')">
+                                + Ekstre Ekle
+                            </button>
+                        </div>
+                    `;
+                }
+
+                container.appendChild(cardEl);
+            });
+
+            const badge = document.getElementById('cardsStatusBadge');
+            if (badge) badge.textContent = `${enteredCount}/${cards.length} İşlendi`;
         }
 
-        cards.forEach(c => {
-            const existingItem = monthItems.find(x => (x.cardDefId === c.id) || (x.category === 'card' && x.title === `${c.name} (Ekstre)`));
-
-            const cardEl = document.createElement('div');
-            cardEl.className = `credit-card-box ${existingItem ? 'entered' : 'waiting'}`;
-
-            if (existingItem) {
-                enteredCount++;
-                const st = getDueStatus(c.dueDay, existingItem.paid);
-                cardEl.innerHTML = `
-                    <div class="card-top">
-                        <div class="card-info">
-                            <div class="card-icon">${c.icon || '💳'}</div>
-                            <div>
-                                <div class="card-text-name">${c.name}</div>
-                                <div class="card-text-due">Kesim: Ayın ${c.cutoffDay}'i • Son Ödeme: Ayın ${c.dueDay}'i • <span class="badge ${st.cls}">${st.text}</span></div>
-                            </div>
-                        </div>
-                        <button class="del-btn" onclick="deleteItem('${existingItem.id}')" title="Bu Ayki Ekstre Kaydını Sil">🗑</button>
-                    </div>
-                    <div class="card-action-box">
-                        <div class="card-debt-clickable" onclick="editCardAmount('${existingItem.id}', ${existingItem.amount})" title="Borç tutarını değiştirmek için tıklayın">
-                            <span style="font-size:11px; color:var(--text-secondary);">Bu Ayki Ekstre Borcu:</span>
-                            <div class="num" style="font-size:16px; font-weight:800; color:var(--text-primary);">${formatTL(existingItem.amount)} ✏️</div>
-                        </div>
-                        <button class="check-btn ${existingItem.paid ? 'checked' : ''}" onclick="togglePaid('${existingItem.id}')" title="Ödendi İşaretle">
-                            ${existingItem.paid ? '✓' : ''}
-                        </button>
-                    </div>
-                `;
-            } else {
-                const cutoffSt = getCutoffStatus(c.cutoffDay);
-                cardEl.innerHTML = `
-                    <div class="card-top">
-                        <div class="card-info">
-                            <div class="card-icon">${c.icon || '💳'}</div>
-                            <div>
-                                <div class="card-text-name">${c.name}</div>
-                                <div class="card-text-due">Kesim: Ayın ${c.cutoffDay}'i • Son Gün: Ayın ${c.dueDay}'i • <span class="badge ${cutoffSt.cls}">${cutoffSt.text}</span></div>
-                            </div>
-                        </div>
-                        <button class="del-btn" onclick="deleteCardDef('${c.id}')" title="Kart Şablonunu Sil">✕</button>
-                    </div>
-                    <div class="card-action-box">
-                        <div style="display:flex; align-items:center; gap:6px;">
-                            <input type="number" step="0.01" id="card-input-${c.id}" class="bill-input-field" placeholder="0.00 ₺">
-                        </div>
-                        <button class="btn btn-primary" style="padding:5px 10px; font-size:11px;" onclick="submitCardAmount('${c.id}')">
-                            + Ekstre Ekle
-                        </button>
-                    </div>
-                `;
+        // Kartlarım sekmesine eklenen diğer kart harcamaları
+        const manualCardsContainer = document.getElementById('cardsManualListContainer');
+        if (manualCardsContainer) {
+            manualCardsContainer.innerHTML = '';
+            const manualCards = monthItems.filter(x => x.type === 'expense' && x.category === 'card' && !x.cardDefId);
+            manualCards.sort((a, b) => (a.dueDay || 99) - (b.dueDay || 99));
+            if (manualCards.length > 0) {
+                const header = document.createElement('div');
+                header.style.cssText = 'font-size:12px; font-weight:700; color:var(--text-secondary); margin:12px 0 6px 0;';
+                header.textContent = 'Kart Harcamaları:';
+                manualCardsContainer.appendChild(header);
+                manualCards.forEach(item => manualCardsContainer.appendChild(createRow(item)));
             }
-
-            container.appendChild(cardEl);
-        });
-
-        const badge = document.getElementById('cardsStatusBadge');
-        if (badge) badge.textContent = `${enteredCount}/${cards.length} İşlendi`;
+        }
     }
 
     // 🔑 KİŞİSEL ŞİFRE KASASI (TAM SAYFA BOYUNCA AÇILAN SADE VE GÜVENLİ SİSTEM)
@@ -3218,7 +3286,7 @@
         const bodyCredit = document.getElementById('body-credit-list');
         if (bodyCredit) {
             bodyCredit.innerHTML = '';
-            const creditList = monthItems.filter(x => x.type === 'expense' && (x.category === 'card' || x.instText) && !x.cardDefId);
+            const creditList = monthItems.filter(x => x.type === 'expense' && (x.category === 'credit' || (!x.category && x.instText && !x.cardDefId)));
             creditList.sort((a, b) => (a.dueDay || 99) - (b.dueDay || 99));
             if (!creditList.length) {
                 bodyCredit.innerHTML = '<div class="empty-state">Bu ay için kredi veya taksitli ödeme kaydı bulunmuyor.</div>';
@@ -3237,7 +3305,7 @@
         const bodyOther = document.getElementById('body-other-expenses');
         if (bodyOther) {
             bodyOther.innerHTML = '';
-            const otherList = monthItems.filter(x => x.type === 'expense' && x.category !== 'bill' && !x.cardDefId && !x.instText);
+            const otherList = monthItems.filter(x => x.type === 'expense' && x.category !== 'credit' && x.category !== 'card' && x.category !== 'bill' && !x.cardDefId && !x.billDefId);
             otherList.sort((a, b) => (a.dueDay || 99) - (b.dueDay || 99));
             if (!otherList.length) {
                 bodyOther.innerHTML = '<div class="empty-state">Bu ay için henüz diğer harcama kaydı bulunmuyor.</div>';
@@ -3267,10 +3335,13 @@
         const div = document.createElement('div');
         div.className = `item-row ${item.paid && item.type === 'expense' ? 'paid' : ''}`;
 
-        // Minimal ikonlar: Fatura 🧾, Kart 💳, Sabit 🔁, Taksit (1/6)
+        // Minimal ikonlar: Kredi 🏦, Kart 💳, Fatura 🧾, Diğer 📋
         let icons = '';
-        if (item.category === 'bill') icons += ' 🧾';
-        if (item.cardDefId || item.category === 'card') icons += ' 💳';
+        if (item.category === 'credit') icons += ' 🏦';
+        else if (item.category === 'card' || item.cardDefId) icons += ' 💳';
+        else if (item.category === 'bill' || item.billDefId) icons += ' 🧾';
+        else if (item.category === 'other' || item.category === 'fixed') icons += ' 📋';
+
         if (item.instText) icons += ` <span style="font-size:11px; opacity:0.75;">(${item.instText})</span>`;
         if (item.recurring) icons += ' <span title="Sabit" style="font-size:12px;">🔁</span>';
 
@@ -3320,7 +3391,7 @@
     }
 
     // MODAL İŞLEMLERİ
-    function openAddModal(type, defaultCategory = 'fixed') {
+    function openAddModal(type, defaultCategory = null) {
         entryType = type;
         document.getElementById('modalBackdrop').classList.add('active');
 
@@ -3344,17 +3415,26 @@
             document.getElementById('submitBtn').style.background = 'var(--success)';
             document.getElementById('submitBtn').textContent = '+ Geliri Kaydet';
         } else {
-            document.getElementById('modalTitle').textContent = '📤 Yeni Gider / Alışveriş Ekle';
+            document.getElementById('modalTitle').textContent = '📤 Yeni Gider Ekle';
             document.getElementById('titleLabel').textContent = 'Gider Açıklaması (Örn: Ev Kirası, Aidat, Kredi Kartı, Alışveriş)';
             document.getElementById('categoryGroup').style.display = 'block';
-            document.getElementById('categoryInput').value = defaultCategory;
-            document.getElementById('paymentModeWrapper').style.display = 'block';
+
+            const tabCategoryMap = {
+                'credit': 'credit',
+                'cards': 'card',
+                'bills': 'bill',
+                'other': 'other'
+            };
+            const initialCategory = defaultCategory || tabCategoryMap[currentExpenseTab] || 'credit';
+            document.getElementById('categoryInput').value = initialCategory;
+            onCategoryInputChange();
+
             document.getElementById('extraOptionsRow').style.display = 'grid';
 
             if (dueDayLabel) dueDayLabel.textContent = 'Son Ödeme Günü (Ayın Kaçı?)';
             if (dueDayInput) { dueDayInput.placeholder = 'Örn: 15'; dueDayInput.value = ''; }
             if (recurringLabel) recurringLabel.textContent = 'Her Ay Sabit Tekrarlar';
-            if (recurringInput) recurringInput.checked = (defaultCategory === 'fixed');
+            if (recurringInput) recurringInput.checked = false;
 
             document.getElementById('submitBtn').style.background = 'var(--accent)';
             document.getElementById('submitBtn').textContent = '+ Gideri Kaydet';
@@ -3362,6 +3442,17 @@
 
         setInstallmentMode(false);
         setTimeout(() => document.getElementById('titleInput').focus(), 50);
+    }
+
+    function onCategoryInputChange() {
+        const cat = document.getElementById('categoryInput').value;
+        const modeWrapper = document.getElementById('paymentModeWrapper');
+        if (modeWrapper) {
+            modeWrapper.style.display = (cat === 'credit' || cat === 'card') ? 'block' : 'none';
+            if (cat !== 'credit' && cat !== 'card') {
+                setInstallmentMode(false);
+            }
+        }
     }
 
     function closeModal() {
@@ -3375,9 +3466,6 @@
         document.getElementById('modeSingleBtn').classList.toggle('active', !flag);
         document.getElementById('modeInstBtn').classList.toggle('active', flag);
         document.getElementById('installmentBox').classList.toggle('show', flag);
-        if (flag) {
-            document.getElementById('categoryInput').value = 'card';
-        }
         updateInstallmentPreview();
     }
 
@@ -3428,7 +3516,7 @@
                     id: Date.now().toString() + '_' + i,
                     ym: getMonthKey(y, m),
                     type: 'expense',
-                    category: 'card',
+                    category: category,
                     title,
                     amount: Math.round(monthlyAmount * 100) / 100,
                     dueDay,
@@ -3455,6 +3543,15 @@
 
         saveStore();
         closeModal();
+
+        if (entryType === 'expense') {
+            const tabMap = { 'credit': 'credit', 'card': 'cards', 'bill': 'bills', 'other': 'other' };
+            const catNames = { 'credit': 'Kredim', 'card': 'Kartlarım', 'bill': 'Faturalarım', 'other': 'Diğer' };
+            if (tabMap[category]) {
+                setExpenseTab(tabMap[category]);
+            }
+            showToast(`✔ "${title}" ${catNames[category] || ''} bölümüne eklendi`);
+        }
     }
 
     function copyRecurring() {
